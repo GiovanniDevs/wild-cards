@@ -156,9 +156,15 @@
   }
 
   // Hide the modal and restart
-  var playAgainButton = document.getElementById("play-again-button");
-  playAgainButton.addEventListener("click", function () {
+  const winButton = document.getElementById("win-play-again-button");
+  winButton.addEventListener("click", function () {
     document.getElementById("win-modal").style.display = "none";
+    // restart the board
+    buildBoard(8);
+  });
+
+  const loseButton = document.getElementById("lose-play-again-button");
+  loseButton.addEventListener("click", function () {
     document.getElementById("lose-modal").style.display = "none";
     // restart the board
     buildBoard(8);
