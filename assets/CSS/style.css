@@ -1,0 +1,68 @@
+:root {
+  --color-01: #5f4534;
+  --color-highlight: #0066cc;
+  --color-03: #c26565;
+  --font-family: 'Arial, sans-serif';
+}
+
+
+/* body styling */
+body {
+    color: var(--color-01);
+    font-family: var(--font-family);
+    margin: 10px;
+    padding: 0;
+    background-color: #f0dfc1;
+}
+
+
+/* heading styling */
+.heading {
+    text-align: center;
+}
+
+.logo {
+    height: 40px;
+    padding: 10px 5px;
+    font-size: 1.5rem;
+}
+
+
+/* Dropdown rules styling */
+#droppdown-rules {
+    text-align: center;
+    max-width: 350px;
+    margin: 0 auto 20px auto;
+    padding: 2px;
+    border: 4px solid var(--color-01);
+    border-radius: 8px;
+    background-color: #ffffff;
+}
+
+section summary #dropdown-btn {
+  margin: 0;
+  cursor: pointer;
+  user-select: none;
+  padding: 10px 0;
+}
+
+details summary {
+  list-style: none;
+  padding-left: 0;
+}
+
+#dropdown-btn:hover {
+  color: var(--color-highlight);
+}
+
+#droppdown-rules[open] summary h2 {
+  color: var(--color-highlight);
+}
+
+
+/* Game area styling */
+.row {
+    max-width: 350px;
+    margin: auto;
+}
+
