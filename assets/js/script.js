@@ -156,7 +156,7 @@
   }
 
   // Hide the modal and restart
-  var playAgainButton = document.getElementById("play-again-button");
+  const playAgainButton = document.getElementById("play-again-button");
   playAgainButton.addEventListener("click", function () {
     document.getElementById("win-modal").style.display = "none";
     document.getElementById("lose-modal").style.display = "none";
