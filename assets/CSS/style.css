@@ -59,3 +59,89 @@ details summary {
     margin: auto;
 }
 
+/* Memory game grid and card styles */
+.game-container { margin-top: 18px; }
+.grid {
+  max-width: 380px;
+  margin: 0 auto;
+}
+.card {
+  width: 70px;
+  height: 90px;
+  perspective: 600px;
+  cursor: pointer;
+  margin: 0 auto;
+}
+.card .card-inner {
+  position: relative;
+  width: 100%;
+  height: 100%;
+  transition: transform 0.45s;
+  transform-style: preserve-3d;
+}
+.card .card-front,
+.card .card-back {
+  position: absolute;
+  inset: 0;
+  backface-visibility: hidden;
+  border-radius: 6px;
+  overflow: hidden;
+}
+.card .card-front {
+  background-size: cover;
+  background-position: center;
+  transform: rotateY(0deg);
+}
+.card .card-back img{width:100%;height:100%;object-fit:cover}
+.card .card-back {
+  transform: rotateY(180deg);
+}
+.card.flipped .card-inner { transform: rotateY(180deg); }
+.card.matched { outline: 3px solid #28a745; }
+
+@media (max-width:420px) {
+  .grid { grid-template-columns: repeat(4, 60px); grid-auto-rows: 80px; gap:8px }
+  .card{width:60px;height:80px}
+}
+
+/* Timer display */
+.game-timer {
+  display: inline-block;
+  font-weight: 700;
+  font-family: inherit;
+  background: #ffffff;
+  border: 2px solid var(--color-01);
+  color: var(--color-01);
+  padding: 6px 10px;
+  border-radius: 6px;
+  min-width: 64px;
+  text-align: center;
+  box-shadow: 0 2px 4px rgba(0,0,0,0.06);
+  transition: all 200ms ease;
+}
+
+/* Low-time warning (apply when timeLeft <= 10) */
+.game-timer.timer-warning {
+  background: #fff7e6;
+  border-color: #ffb703;
+  color: #8a5200;
+  transform: scale(1.05);
+  box-shadow: 0 4px 8px rgba(255,183,3,0.12);
+}
+
+/* Expired/disabled look */
+.game-timer.timer-expired {
+  background: #f5f5f5;
+  border-color: #d1d1d1;
+  color: #8a8a8a;
+  opacity: 0.95;
+}
+
+/* Responsive tweaks */
+@media (max-width: 420px) {
+  .game-timer {
+    padding: 4px 8px;
+    font-size: 0.95rem;
+    min-width: 52px;
+  }
+}
