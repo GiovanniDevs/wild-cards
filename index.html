@@ -75,7 +75,43 @@
       <div class="text-end">
         <button id="restart-button" class="btn">Restart Game</button>
       </div>
+      <div class="text-center game-container">
+        <div class="grid row g-2 justify-content-center">
+          <!-- Cards game content -->
+        </div>
+      </div>
+      <!-- Timer and Restart Button -->
+      <div class="text-end d-flex align-items-center gap-2">
+        <button id="restart-button" class="btn">Restart Game</button>
+        <span id="game-timer" class="game-timer">01:00</span>
+      </div>
     </section>
+
+    <script>
+      document
+        .getElementById("dropdown-btn")
+        .addEventListener("click", function () {
+          var collapse = new bootstrap.Collapse(
+            document.getElementById("rules-box"),
+            {
+              toggle: true,
+            }
+          );
+        });
+    </script>
+
+    <script>
+      document
+        .getElementById("dropdown-btn")
+        .addEventListener("click", function () {
+          var collapse = new bootstrap.Collapse(
+            document.getElementById("rules-box"),
+            {
+              toggle: true,
+            }
+          );
+        });
+    </script>
 
     <!-- Overlay end of game modal, hidden by default -->
     <!-- win -->

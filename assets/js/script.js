@@ -82,6 +82,78 @@
 
   let flipped = [];
   let lockBoard = false;
+  let flipped = [];
+  let lockBoard = false;
+
+  // Timer setup (1 minute)
+
+  const timerEl = document.getElementById("game-timer"); // element added in index.html
+  let timerInterval = null;
+  let timeLeft = 60; // seconds
+  let timerStarted = false; // becomes true when first valid card is flipped
+
+  // Format time to seconds
+
+  function formatTime(seconds) {
+    const mm = String(Math.floor(seconds / 60)).padStart(2, "0");
+    const ss = String(seconds % 60).padStart(2, "0");
+    return `${mm}:${ss}`;
+  }
+
+  // Update timer display warning color
+
+  function updateTimerDisplay() {
+    if (!timerEl) return;
+    timerEl.textContent = formatTime(timeLeft);
+    if (timeLeft <= 10) {
+      timerEl.classList.add("timer-warning");
+    } else {
+      timerEl.classList.remove("timer-warning");
+    }
+  }
+
+  function stopTimer() {
+    if (timerInterval) {
+      clearInterval(timerInterval);
+      timerInterval = null;
+      timerStarted = false;
+    }
+  }
+
+  function resetTimer() {
+    stopTimer();
+    timeLeft = 60;
+    timerStarted = false;
+    if (timerEl) {
+      timerEl.classList.remove("timer-expired", "timer-warning");
+      updateTimerDisplay();
+    }
+  }
+
+  function onTimeUp() {
+    if (timerEl) timerEl.classList.add("timer-expired");
+    lockBoard = true; // block clicks when time is up
+    alert("Time is up!");
+  }
+
+  function startTimer() {
+    stopTimer();
+    timeLeft = 60;
+    if (timerEl) timerEl.classList.remove("timer-expired", "timer-warning");
+    updateTimerDisplay();
+    lockBoard = false; // ensure board is enabled on restart
+    timerStarted = true;
+    timerInterval = setInterval(() => {
+      if (timeLeft <= 0) {
+        stopTimer();
+        updateTimerDisplay();
+        onTimeUp();
+        return;
+      }
+      timeLeft -= 1;
+      updateTimerDisplay();
+    }, 1000);
+  }
 
   function onCardClick(e) {
     const card = e.currentTarget;
@@ -91,6 +163,9 @@
       card.classList.contains("flipped")
     )
       return;
+
+    // Start the timer on the first valid card flip
+    if (!timerStarted) startTimer();
 
     flipCard(card);
     flipped.push(card);
@@ -130,45 +205,11 @@
   function checkWin() {
     const remaining = gridEl.querySelectorAll(".card:not(.matched)");
     if (remaining.length === 0) {
+      stopTimer();
       showWinModal();
       //   setTimeout(() => alert("Congratulations — you found all pairs!"), 200);
     }
   }
-
-  // ------------ End of Game modal functions
-
-  // Shows winning modal
-  function showWinModal() {
-    const modal = document.getElementById("win-modal");
-    modal.style.display = "flex";
-
-    // Optional: Add game stats
-    // document.getElementById('final-stats').textContent = `Time: ${timeElapsed}s`;
-  }
-
-  //   Show lose modal
-  function showLoseModal() {
-    const modal = document.getElementById("lose-modal");
-    modal.style.display = "flex";
-
-    // Optional: Add game stats
-    // document.getElementById('final-stats').textContent = `Time: ${timeElapsed}s`;
-  }
-
-  // Hide the modal and restart
-  const winButton = document.getElementById("win-play-again-button");
-  winButton.addEventListener("click", function () {
-    document.getElementById("win-modal").style.display = "none";
-    // restart the board
-    buildBoard(8);
-  });
-
-  const loseButton = document.getElementById("lose-play-again-button");
-  loseButton.addEventListener("click", function () {
-    document.getElementById("lose-modal").style.display = "none";
-    // restart the board
-    buildBoard(8);
-  });
 
   startBtn && startBtn.addEventListener("click", () => buildBoard(8));
   restartBtn && restartBtn.addEventListener("click", () => buildBoard(8));
