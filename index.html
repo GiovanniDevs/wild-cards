@@ -1,78 +1,94 @@
 <!DOCTYPE html>
 <html lang="en">
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
 
-<head>
-    <meta charset="UTF-8">
-    <meta name="viewport" content="width=device-width, initial-scale=1.0">
-
-    <meta name="description" content="Memory Match Mania. Fun Game.">
-    <meta name="keywords" content="memory, play, game, fun, cards">
+    <meta name="description" content="Memory Match Mania. Fun Game." />
+    <meta name="keywords" content="memory, play, game, fun, cards" />
 
     <title>Memory Match Mania</title>
 
-    <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.2.3/dist/css/bootstrap.min.css" rel="stylesheet" integrity="sha384-rbsA2VBKQhggwzxH7pPCaAqO46MgnOM80zW1RWuH61DGLwZJEdK2Kadq2F9CUG65" crossorigin="anonymous">
-    <link rel="stylesheet" href="assets/css/style.css">
-</head>
+    <link
+      href="https://cdn.jsdelivr.net/npm/bootstrap@5.2.3/dist/css/bootstrap.min.css"
+      rel="stylesheet"
+      integrity="sha384-rbsA2VBKQhggwzxH7pPCaAqO46MgnOM80zW1RWuH61DGLwZJEdK2Kadq2F9CUG65"
+      crossorigin="anonymous"
+    />
+    <link rel="stylesheet" href="assets/css/style.css" />
+  </head>
 
-<body>
-
+  <body>
     <h1 class="heading">
-        <img class="logo" src="assets/images/logo.png" alt="logo">Memory Match Mania<img class="logo" src="assets/images/logo.png" alt="logo">
+      <img class="logo" src="assets/images/logo.png" alt="logo" />Memory Match
+      Mania<img class="logo" src="assets/images/logo.png" alt="logo" />
     </h1>
 
     <section class="container-fluid" id="droppdown-rules">
-        <details>
-            <summary><h2 id="dropdown-btn">Game Rules</h2></summary>        
-            <div class="justify-content-center">
-                <div class="collapse" id="rules-box">
-                    <div class="card">
-                        <ul class="mt-3">        
-                            <li>Click on a card to flip it over.</li>
-                            <li>Try to find a matching pair of cards.</li>
-                            <li>The game ends when all pairs are found.</li>
-                            <li></li>
-                            <li></li>
-                        </ul>
-                    </div>
-                </div>
+      <details>
+        <summary><h2 id="dropdown-btn">Game Rules</h2></summary>
+        <div class="justify-content-center">
+          <div class="collapse" id="rules-box">
+            <div class="card">
+              <ul class="mt-3">
+                <li>Click on a card to flip it over.</li>
+                <li>Try to find a matching pair of cards.</li>
+                <li>The game ends when all pairs are found.</li>
+                <li></li>
+                <li></li>
+              </ul>
             </div>
-        </details>
+          </div>
+        </div>
+      </details>
     </section>
 
-    <section class="container-fluid" id="game-section"> <!-- Game difficulty -->
-        <div class="row justify-content-center g-2">
-            <div class="col-4">
-                <input type="radio" id="easy" name="options" value="easy" checked>
-                <label for="easy">Easy</label>
-            </div>
-
-            <div class="col-4">
-                <input type="radio" id="normal" name="options" value="normal">
-                <label for="normal">Normal</label>
-            </div>
-
-            <div class="col-4">
-                <input type="radio" id="hard" name="options" value="hard">
-                <label for="hard">Hard</label>
-            </div>
-
-            <div class="col-12 text-center">
-                <button id="start-button" class="">Shuffle Cards</button> <!-- To shuffle cards based on selected option -->
-            </div>
+    <section class="container-fluid" id="game-section">
+      <!-- Game difficulty -->
+      <div class="row justify-content-center g-2">
+        <div class="col-4">
+          <input type="radio" id="easy" name="options" value="easy" checked />
+          <label for="easy">Easy</label>
         </div>
 
-        <div class="text-center game-container">
-            <div class="grid row g-2 justify-content-center">
-                <!-- Cards game content -->
-            </div>
+        <div class="col-4">
+          <input type="radio" id="normal" name="options" value="normal" />
+          <label for="normal">Normal</label>
         </div>
-        <div class="text-end">
-            <button id="restart-button" class="btn">Restart Game</button>
+
+        <div class="col-4">
+          <input type="radio" id="hard" name="options" value="hard" />
+          <label for="hard">Hard</label>
         </div>
+
+        <div class="col-12 text-center">
+          <button id="start-button" class="">Shuffle Cards</button>
+          <!-- To shuffle cards based on selected option -->
+        </div>
+      </div>
+
+      <div class="text-center game-container">
+        <div class="grid row g-2 justify-content-center">
+          <!-- Cards game content -->
+        </div>
+      </div>
+      <div class="text-end">
+        <button id="restart-button" class="btn">Restart Game</button>
+      </div>
     </section>
 
+    <!-- Overlay end og game modal, hidden by default -->
+    <div id="game-over-modal" class="modal-overlay">
+      <div class="modal-content">
+        <h2>🎉 Congratulations! 🎉</h2>
+        <p>You've matched all the cards!</p>
+        <p id="final-stats"></p>
+        <button id="play-again-button" class="btn">Play Again</button>
+      </div>
+    </div>
+    <!-- Bootstrap JS -->
     <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0/dist/js/bootstrap.bundle.min.js"></script>
+    <!-- Custom JS -->
     <script src="assets/js/script.js"></script>
-</body>
-
+  </body>
 </html>
