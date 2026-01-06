@@ -66,3 +66,48 @@ details summary {
     margin: auto;
 }
 
+/* Memory game grid and card styles */
+.game-container { margin-top: 18px; }
+.grid {
+  max-width: 380px;
+  margin: 0 auto;
+}
+.card {
+  width: 70px;
+  height: 90px;
+  perspective: 600px;
+  cursor: pointer;
+  margin: 0 auto;
+}
+.card .card-inner {
+  position: relative;
+  width: 100%;
+  height: 100%;
+  transition: transform 0.45s;
+  transform-style: preserve-3d;
+}
+.card .card-front,
+.card .card-back {
+  position: absolute;
+  inset: 0;
+  backface-visibility: hidden;
+  border-radius: 6px;
+  overflow: hidden;
+}
+.card .card-front {
+  background-size: cover;
+  background-position: center;
+  transform: rotateY(0deg);
+}
+.card .card-back img{width:100%;height:100%;object-fit:cover}
+.card .card-back {
+  transform: rotateY(180deg);
+}
+.card.flipped .card-inner { transform: rotateY(180deg); }
+.card.matched { outline: 3px solid #28a745; }
+
+@media (max-width:420px) {
+  .grid { grid-template-columns: repeat(4, 60px); grid-auto-rows: 80px; gap:8px }
+  .card{width:60px;height:80px}
+}
+
