@@ -82,8 +82,6 @@
 
   let flipped = [];
   let lockBoard = false;
-  let flipped = [];
-  let lockBoard = false;
 
   // Timer setup (1 minute)
 
@@ -211,6 +209,40 @@
     }
   }
 
+  // ------------ End of Game modal functions
+
+  // Shows winning modal
+  function showWinModal() {
+    const modal = document.getElementById("win-modal");
+    modal.style.display = "flex";
+
+    // Optional: Add game stats
+    // document.getElementById('final-stats').textContent = `Time: ${timeElapsed}s`;
+  }
+
+  //   Show lose modal
+  function showLoseModal() {
+    const modal = document.getElementById("lose-modal");
+    modal.style.display = "flex";
+
+    // Optional: Add game stats
+    // document.getElementById('final-stats').textContent = `Time: ${timeElapsed}s`;
+  }
+
+  // Hide the modal and restart
+  const winButton = document.getElementById("win-play-again-button");
+  winButton.addEventListener("click", function () {
+    document.getElementById("win-modal").style.display = "none";
+    // restart the board
+    buildBoard(8);
+  });
+
+  const loseButton = document.getElementById("lose-play-again-button");
+  loseButton.addEventListener("click", function () {
+    document.getElementById("lose-modal").style.display = "none";
+    // restart the board
+    buildBoard(8);
+  });
   startBtn && startBtn.addEventListener("click", () => buildBoard(8));
   restartBtn && restartBtn.addEventListener("click", () => buildBoard(8));
 
