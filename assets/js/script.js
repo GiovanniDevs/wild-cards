@@ -83,6 +83,10 @@
       gridEl.appendChild(col);
     });
 
+
+// FIRST push the new branch to the REMOTE in case anything goes wrong
+// branch name: auto-swap-move-card-feature 
+
     // Swap & move unMatched Cards feature
 		// getUnmatchedFaceDownCards() after board is built
 		setTimeout(() => {
