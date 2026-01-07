@@ -1,66 +1,72 @@
 :root {
-    --color-01: #5f4534;
-    --color-highlight: #2cceab;
-    --color-03: #c26565;
-    --font-family: 'Arial, sans-serif';
+  --color-01: #5f4534;
+  --color-highlight: #2cceab;
+  --color-03: #c26565;
+  --font-family: "Arial, sans-serif";
 }
 
 @keyframes colorChange {
-    0% { color: var(--color-01); }
-    50% { color: var(--color-highlight); }
-    100% { color: var(--color-01); }
+  0% {
+    color: var(--color-01);
+  }
+  50% {
+    color: var(--color-highlight);
+  }
+  100% {
+    color: var(--color-01);
+  }
 }
 
 /* body styling */
 body {
-    color: var(--color-01);
-    font-family: var(--font-family);
-    margin: 10px;
-    padding: 0;
-    background-color: #f0dfc1;
+  color: var(--color-01);
+  font-family: var(--font-family);
+  margin: 10px;
+  padding: 0;
+  background-color: #f0dfc1;
 }
-
 
 /* heading styling */
 .heading {
-    text-align: center;
-    font-size: 64px;
+  text-align: center;
+  font-size: 64px;
 }
 
 /* Dropdown rules styling */
 #droppdown-rules {
-    animation: colorChange 2s infinite;
+  animation: colorChange 2s infinite;
 }
 
 section summary #dropdown-btn {
-    margin: 0;
-    cursor: pointer;
-    user-select: none;
-    padding: 10px 0;
+  margin: 0;
+  cursor: pointer;
+  user-select: none;
+  padding: 10px 0;
 }
 
 details summary {
-    list-style: none;
-    padding-left: 0;
+  list-style: none;
+  padding-left: 0;
 }
 
 #dropdown-btn {
-    animation: colorChange 3s infinite;
+  animation: colorChange 3s infinite;
 }
 
 #droppdown-rules[open] #dropdown-btn {
-    color: var(--color-highlight);
+  color: var(--color-highlight);
 }
-
 
 /* Game area styling */
 .row {
-    max-width: 350px;
-    margin: auto;
+  max-width: 350px;
+  margin: auto;
 }
 
 /* Memory game grid and card styles */
-.game-container { margin-top: 18px; }
+.game-container {
+  margin-top: 18px;
+}
 .grid {
   max-width: 380px;
   margin: 0 auto;
@@ -92,16 +98,31 @@ details summary {
   background-position: center;
   transform: rotateY(0deg);
 }
-.card .card-back img{width:100%;height:100%;object-fit:cover}
+.card .card-back img {
+  width: 100%;
+  height: 100%;
+  object-fit: cover;
+}
 .card .card-back {
   transform: rotateY(180deg);
 }
-.card.flipped .card-inner { transform: rotateY(180deg); }
-.card.matched { outline: 3px solid #28a745; }
+.card.flipped .card-inner {
+  transform: rotateY(180deg);
+}
+.card.matched {
+  outline: 3px solid #28a745;
+}
 
-@media (max-width:420px) {
-  .grid { grid-template-columns: repeat(4, 60px); grid-auto-rows: 80px; gap:8px }
-  .card{width:60px;height:80px}
+@media (max-width: 420px) {
+  .grid {
+    grid-template-columns: repeat(4, 60px);
+    grid-auto-rows: 80px;
+    gap: 8px;
+  }
+  .card {
+    width: 60px;
+    height: 80px;
+  }
 }
 
 /* Timer display */
@@ -116,7 +137,7 @@ details summary {
   border-radius: 6px;
   min-width: 64px;
   text-align: center;
-  box-shadow: 0 2px 4px rgba(0,0,0,0.06);
+  box-shadow: 0 2px 4px rgba(0, 0, 0, 0.06);
   transition: all 200ms ease;
 }
 
@@ -126,7 +147,7 @@ details summary {
   border-color: #ffb703;
   color: #8a5200;
   transform: scale(1.05);
-  box-shadow: 0 4px 8px rgba(255,183,3,0.12);
+  box-shadow: 0 4px 8px rgba(255, 183, 3, 0.12);
 }
 
 /* Expired/disabled look */
@@ -135,6 +156,32 @@ details summary {
   border-color: #d1d1d1;
   color: #8a8a8a;
   opacity: 0.95;
+}
+
+/* end of game modal styling -------------------*/
+
+.modal-overlay {
+  display: none; /* Hidden by default */
+  position: fixed;
+  top: 0;
+  left: 0;
+  width: 100%;
+  height: 100%;
+  background-color: rgba(0, 0, 0, 0.8);
+  z-index: 1000;
+  justify-content: center;
+  align-items: center;
+}
+
+.modal-content {
+  background-color: white;
+  padding: 40px;
+  border-radius: 15px;
+  text-align: center;
+  margin: 0 20px;
+  box-shadow: 0 5px 20px rgba(0, 0, 0, 0.5);
+  max-width: 400px;
+  /* animation: slideIn 0.3s ease-out; consider adding a slide in animation*/
 }
 
 /* Responsive tweaks */
