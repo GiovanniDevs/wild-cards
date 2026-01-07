@@ -32,14 +32,29 @@
         <div class="row">
           <div class="col-12">
             <div class="rules mt-4 fw-bold">
-              <summary><p id="dropdown-btn">Rules</p></summary>
+              <button id="open-rules" class="btn btn-primary">
+                See Rules ⚖️
+              </button>
             </div>
           </div>
         </div>
       </div>
     </header>
 
-    <div class="collapse text-center mx-auto col-4" id="rules-box">
+    <!-- Rules Modal -->
+    <div id="rules-modal" class="modal-overlay">
+      <div class="modal-content">
+        <h2>⚖️ Rules</h2>
+        <ul class="mt-2">
+          <li>Click on a card to flip it over.</li>
+          <li>Try to find a matching pair of cards.</li>
+          <li>The game ends when all pairs are found.</li>
+        </ul>
+        <button id="close-rules" class="btn btn-primary">Close</button>
+      </div>
+    </div>
+
+    <!-- <div class="collapse text-center mx-auto col-4" id="rules-box">
       <div class="rules-card">
         <ul class="mt-2">
           <li>Click on a card to flip it over.</li>
@@ -47,7 +62,7 @@
           <li>The game ends when all pairs are found.</li>
         </ul>
       </div>
-    </div>
+    </div> -->
 
     <section class="container-fluid" id="game-section">
       <!-- Game difficulty -->
