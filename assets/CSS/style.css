@@ -90,6 +90,7 @@ details summary {
 
 /* Start of Auto card swap and move feature styling -------------------*/
 /* Card swap preview animation */
+/* test */
 @keyframes swapPreview {
   10%, 90% { 
     transform: scale(1);

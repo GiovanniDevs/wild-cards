@@ -83,7 +83,7 @@
       gridEl.appendChild(col);
     });
 
-    // Swap & move unMatched Cards 
+    // Swap & move unMatched Cards feature
 		// getUnmatchedFaceDownCards() after board is built
 		setTimeout(() => {
 			console.log('=== Step 1 Test: getUnmatchedFaceDownCards() ===');
@@ -356,19 +356,24 @@
 		console.log('Card 1:', card1.dataset.face, '- Container index:', index1);
 		console.log('Card 2:', card2.dataset.face, '- Container index:', index2);
 		
+		// Get grid container position for relative calculations
+		const gridRect = parent.getBoundingClientRect();
+		
 		// Get initial positions (center points) before any changes
 		const firstRect1 = container1.getBoundingClientRect();
 		const firstRect2 = container2.getBoundingClientRect();
 		
-		// Calculate center points (x, y) of each card
-		const firstCenterX1 = firstRect1.left + firstRect1.width / 2;
-		const firstCenterY1 = firstRect1.top + firstRect1.height / 2;
-		const firstCenterX2 = firstRect2.left + firstRect2.width / 2;
-		const firstCenterY2 = firstRect2.top + firstRect2.height / 2;
+		// Calculate center points relative to grid container (not viewport)
+		// This prevents large/negative values when page is scrolled or grid is positioned
+		const firstCenterX1 = (firstRect1.left - gridRect.left) + firstRect1.width / 2;
+		const firstCenterY1 = (firstRect1.top - gridRect.top) + firstRect1.height / 2;
+		const firstCenterX2 = (firstRect2.left - gridRect.left) + firstRect2.width / 2;
+		const firstCenterY2 = (firstRect2.top - gridRect.top) + firstRect2.height / 2;
 		
 		console.log('=== Starting Visual Swap ===');
-		console.log('Card 1 initial center:', firstCenterX1.toFixed(2), firstCenterY1.toFixed(2));
-		console.log('Card 2 initial center:', firstCenterX2.toFixed(2), firstCenterY2.toFixed(2));
+		console.log('Grid container position:', gridRect.left.toFixed(2), gridRect.top.toFixed(2));
+		console.log('Card 1 initial center (relative to grid):', firstCenterX1.toFixed(2), firstCenterY1.toFixed(2));
+		console.log('Card 2 initial center (relative to grid):', firstCenterX2.toFixed(2), firstCenterY2.toFixed(2));
 		
 		// Add transition class and prepare for animation
 		container1.classList.add('swapping');
@@ -376,7 +381,7 @@
 		container1.style.transformOrigin = 'center center';
 		container2.style.transformOrigin = 'center center';
 		
-		// Calculate the distance each card needs to travel
+		// Calculate the distance each card needs to travel (relative to grid)
 		// Card 1 needs to move to Card 2's position
 		const deltaX1 = firstCenterX2 - firstCenterX1;
 		const deltaY1 = firstCenterY2 - firstCenterY1;
