@@ -400,5 +400,68 @@
   document.addEventListener("DOMContentLoaded", () => {
     buildBoard(8);
     resetTimer();
+
+    const welcomeEl = document.getElementById("welcome-msg");
+    function setWelcome(name) {
+      if (welcomeEl) welcomeEl.textContent = `Welcome ${name}`;
+    }
+
+    const stored = localStorage.getItem("playerName");
+    if (stored) {
+      setWelcome(stored);
+    }
+
+    const userModalEl = document.getElementById("usernameModal");
+    const saveBtn = document.getElementById("username-save-button");
+    const usernameInput = document.getElementById("username-input");
+
+    const saveName = () => {
+      const name = (usernameInput && usernameInput.value.trim()) || "Player";
+      localStorage.setItem("playerName", name);
+      setWelcome(name);
+      if (userModalEl && window.bootstrap) {
+        const inst = window.bootstrap.Modal.getInstance(userModalEl) || new window.bootstrap.Modal(userModalEl);
+        inst.hide();
+      }
+    };
+
+    if (saveBtn) saveBtn.addEventListener("click", saveName);
+    if (usernameInput) {
+      usernameInput.addEventListener("keydown", (e) => {
+        if (e.key === "Enter") {
+          e.preventDefault();
+          saveName();
+        }
+      });
+    }
+
+    // Show modal initial run
+    if (!stored && userModalEl) {
+      if (!window.bootstrap) {
+        console.warn("Bootstrap not loaded; username modal will not be shown.");
+      } else {
+        const userModal = new window.bootstrap.Modal(userModalEl);
+        userModal.show();
+        if (usernameInput) usernameInput.focus();
+      }
+    }
+
+    // allow editing the name once set
+    const editBtn = document.getElementById("edit-username-button");
+    if (editBtn) {
+      editBtn.addEventListener("click", () => {
+        const userModalEl = document.getElementById("usernameModal");
+        const usernameInput = document.getElementById("username-input");
+        if (!userModalEl) return;
+        if (!window.bootstrap) {
+          console.warn("Bootstrap not loaded; cannot open username modal.");
+          return;
+        }
+        const userModal = new window.bootstrap.Modal(userModalEl);
+        if (usernameInput) usernameInput.value = localStorage.getItem("playerName") || "";
+        userModal.show();
+        if (usernameInput) usernameInput.focus();
+      });
+    }
   });
 })();
