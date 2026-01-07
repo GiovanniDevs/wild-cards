@@ -131,7 +131,8 @@
   function onTimeUp() {
     if (timerEl) timerEl.classList.add("timer-expired");
     lockBoard = true; // block clicks when time is up
-    alert("Time is up!");
+    showLoseModal();
+    // alert("Time is up!"); commented out for testing
   }
 
   function startTimer() {
