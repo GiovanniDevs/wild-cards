@@ -87,8 +87,32 @@
 
   const timerEl = document.getElementById("game-timer"); // element added in index.html
   let timerInterval = null;
-  let timeLeft = 60; // seconds
+  let timeLeft = 60; // seconds (will be set from difficulty)
   let timerStarted = false; // becomes true when first valid card is flipped
+
+  // Difficulty selection -> seconds mapping
+  const difficultyRadios = document.querySelectorAll('input[name="options"]');
+  const difficultySecondsMap = { easy: 90, normal: 60, hard: 30 };
+  let currentDifficulty =
+    document.querySelector('input[name="options"]:checked')?.value || "easy";
+
+  function getDifficultySeconds() {
+    return difficultySecondsMap[currentDifficulty] ?? 60;
+  }
+
+  // Update the timer preview when difficulty changes (if timer isn't running)
+  difficultyRadios.forEach((radio) => {
+    radio.addEventListener("change", (e) => {
+      currentDifficulty = e.target.value;
+      if (!timerStarted) {
+        timeLeft = getDifficultySeconds();
+        if (timerEl) {
+          timerEl.classList.remove("timer-expired", "timer-warning");
+          updateTimerDisplay();
+        }
+      }
+    });
+  });
 
   // Format time to seconds
 
@@ -120,7 +144,7 @@
 
   function resetTimer() {
     stopTimer();
-    timeLeft = 60;
+    timeLeft = getDifficultySeconds();
     timerStarted = false;
     if (timerEl) {
       timerEl.classList.remove("timer-expired", "timer-warning");
@@ -136,7 +160,7 @@
 
   function startTimer() {
     stopTimer();
-    timeLeft = 60;
+    timeLeft = getDifficultySeconds();
     if (timerEl) timerEl.classList.remove("timer-expired", "timer-warning");
     updateTimerDisplay();
     lockBoard = false; // ensure board is enabled on restart
