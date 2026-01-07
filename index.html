@@ -19,24 +19,21 @@
   <body>
     <header class="text-center">
       <div class="container">
-        <div class="d-flex justify-content-between align-items-start">
-          <div class="col-12">
-            <nav class="navbar-expand-lg mx-auto text-center">
-              <div>
-                <a class="navbar-brand" href="index.html">
-                  <h1 class="heading text-center text-uppercase fw-bold">
-                    Memory
-                  </h1>
-                </a>
-                <p class="text-uppercase fw-bold">
-                  A memory game ... with a twist
-                </p>
-              </div>
-            </nav>
+        <div class="row">
+          <div class="col-12 px-xs-0 text-center my-2">
+            <h1 class="display-1 fw-bold my-lg-5">Memory</h1>
           </div>
+        </div>
 
-          <div class="rules mt-4 fw-bold">
-            <summary><p id="dropdown-btn">Rules</p></summary>
+        <div class="col-sm-12 col-md-6">
+          <p class="lead my-2">Can you remember and ... keep track?</p>
+        </div>
+
+        <div class="row">
+          <div class="col-12">
+            <div class="rules mt-4 fw-bold">
+              <summary><p id="dropdown-btn">Rules</p></summary>
+            </div>
           </div>
         </div>
       </div>
@@ -116,12 +113,9 @@
       document
         .getElementById("dropdown-btn")
         .addEventListener("click", function () {
-          new bootstrap.Collapse(
-            document.getElementById("rules-box"),
-            {
-              toggle: true,
-            }
-          );
+          new bootstrap.Collapse(document.getElementById("rules-box"), {
+            toggle: true,
+          });
         });
     </script>
 
