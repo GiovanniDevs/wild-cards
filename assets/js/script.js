@@ -78,10 +78,29 @@
       col.appendChild(card);
       gridEl.appendChild(col);
     });
+
+    // Step 1: Swap Positions of unMatched Cards 
+		// getUnmatchedFaceDownCards() after board is built
+		setTimeout(() => {
+			console.log('=== Step 1 Test: getUnmatchedFaceDownCards() ===');
+			const eligible = getUnmatchedFaceDownCards();
+			console.log('Test Result: Found', eligible.length, 'eligible cards');
+			console.log('Eligible card faces:', eligible.map(c => c.dataset.face));
+			console.log('=== End Test ===');
+		}, 100);
+
   }
 
   let flipped = [];
   let lockBoard = false;
+
+  // Step 1: Swap Positions of unMatched Cards 
+	// Card swapping feature - Step 1: Global variables
+	let swapInterval = null;
+	const SWAP_INTERVAL_MS = 12000;  // 12 seconds (between 10-15)
+	const PREVIEW_DURATION = 500;    // Visual feedback before swap
+	const SWAP_DURATION = 600;       // Animation duration
+
 
   // Timer setup (1 minute)
 
@@ -194,10 +213,21 @@
   }
 
   function resetFlip(matched) {
-    flipped = [];
-    lockBoard = false;
-    if (matched) checkWin();
-  }
+		flipped = [];
+		lockBoard = false;
+		// optionally check for win when matched
+		if (matched) {
+			// Step 1: Swap Positions of unMatched Cards 
+			// Log eligible cards after a match pair in the console log
+			setTimeout(() => {
+				console.log('=== After Match: Checking Eligible Cards ===');
+				const eligible = getUnmatchedFaceDownCards();
+				console.log('Match found! Eligible cards now:', eligible.length);
+				console.log('=== End Test ===');
+			}, 100);
+			checkWin();
+		}
+	}
 
   function checkWin() {
     const remaining = gridEl.querySelectorAll(".card:not(.matched)");
@@ -206,6 +236,42 @@
       showWinModal();
     }
   }
+
+  // Step 1: Swap Positions of unMatched Cards
+	// Function to get unmatched face-down cards
+	function getUnmatchedFaceDownCards() {
+		if (!gridEl) return [];
+		
+		const allCards = gridEl.querySelectorAll('.card');
+		const eligibleCards = Array.from(allCards).filter(card => {
+			// Card must NOT be matched
+			const isNotMatched = !card.classList.contains('matched');
+			// Card must NOT be flipped (face-down)
+			const isFaceDown = !card.classList.contains('flipped');
+			// Card must NOT be in the currently flipped array
+			const isNotCurrentlyFlipped = !flipped.includes(card);
+			
+			return isNotMatched && isFaceDown && isNotCurrentlyFlipped;
+		});
+		// Test logging (remove in production)
+		console.log('Eligible cards for swapping:', eligibleCards.length);
+		console.log('Total cards:', allCards.length);
+		console.log('Matched cards:', gridEl.querySelectorAll('.card.matched').length);
+		console.log('Flipped cards:', gridEl.querySelectorAll('.card.flipped').length);
+		
+		return eligibleCards;
+	}
+
+  // Step 1 Testing: Helper function to check eligible cards anytime
+	// Call this from the browser console: testEligibleCards()
+	window.testEligibleCards = function() {
+		console.log('=== Manual Test: getUnmatchedFaceDownCards() ===');
+		const eligible = getUnmatchedFaceDownCards();
+		console.log('Eligible cards:', eligible.length);
+		console.log('Eligible card faces:', eligible.map(c => c.dataset.face));
+		console.log('=== End Test ===');
+		return eligible.length;
+	};
 
   // ------------ START of game modals section ------------
 
