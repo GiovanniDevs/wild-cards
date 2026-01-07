@@ -371,10 +371,19 @@
     const modal = document.getElementById("win-modal");
     modal.style.display = "flex";
 
+    const score = calcScore();
+
     //Add game stats
     document.getElementById(
       "win-final-stats"
-    ).textContent = `Time left: ${timeLeft}s`;
+    ).textContent = `Final score: ${score}`;
+  }
+
+  function calcScore() {
+    let level = getDifficultySeconds();
+    let factor = level / 10;
+    let score = timeLeft * factor;
+    return score;
   }
 
   //   Show lose modal
