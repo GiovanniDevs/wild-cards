@@ -17,7 +17,7 @@
   </head>
 
   <body>
-    <header class="text-center">
+    <header class="navbar text-center">
       <div class="container">
         <div class="d-flex justify-content-between align-items-start">
           <div class="col-12">
@@ -39,18 +39,18 @@
             <summary><p id="dropdown-btn">Rules</p></summary>
           </div>
         </div>
+
+        <div class="collapse text-center mx-auto col-4" id="rules-box">
+          <div class="rules-card">
+            <ul class="mt-2">
+              <li>Click on a card to flip it over.</li>
+              <li>Try to find a matching pair of cards.</li>
+              <li>The game ends when all pairs are found.</li>
+            </ul>
+          </div>
+        </div>
       </div>
     </header>
-
-    <div class="collapse text-center mx-auto col-4" id="rules-box">
-      <div class="rules-card">
-        <ul class="mt-2">
-          <li>Click on a card to flip it over.</li>
-          <li>Try to find a matching pair of cards.</li>
-          <li>The game ends when all pairs are found.</li>
-        </ul>
-      </div>
-    </div>
 
     <section class="container-fluid" id="game-section">
       <!-- Game difficulty -->
@@ -111,6 +111,15 @@
         </button>
       </div>
     </div>
+
+    <Footer class="mt-3">
+      <div class="container">
+        <p class="pt-3 text-center">
+          &copy; 2026 Memory Match Mania. All rights reserved. <br> Developed by
+          Terence Reilly, Giovanni Devs, Iain Kirkham, Viktor Goönczöl, Valentino Farias
+        </p>
+      </div>
+    </Footer>
 
     <script>
       document
