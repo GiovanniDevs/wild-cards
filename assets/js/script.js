@@ -251,6 +251,18 @@
     });
   }
 
+  // Rules buttons modal
+
+  const openButton = document.getElementById("open-rules");
+  openButton.addEventListener("click", function () {
+    document.getElementById("rules-modal").style.display = "flex";
+  });
+
+  const closeButton = document.getElementById("close-rules");
+  closeButton.addEventListener("click", function () {
+    document.getElementById("rules-modal").style.display = "none";
+  });
+
   // build initial board on load and reset timer
   document.addEventListener("DOMContentLoaded", () => {
     buildBoard(8);
