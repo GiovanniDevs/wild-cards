@@ -30,11 +30,19 @@
 
         <div class="row">
           <div class="col-12">
-            <div class="rules mt-4 fw-bold">
-              <button id="open-rules" class="btn btn-primary">
+            <div class="mt-4 fw-bold">
+              <button id="open-rules" class="btn btn-success">
                 See Rules ⚖️
               </button>
             </div>
+          </div>
+          <div class="col-12 align-items-center gap-2 my-2">
+            <!-- Timer and Restart Button -->
+
+            <button id="restart-button" class="btn btn-secondary">
+              Restart Game
+            </button>
+            <span id="game-timer" class="game-timer">01:00</span>
           </div>
         </div>
       </div>
@@ -76,11 +84,6 @@
         <div class="grid row g-2 justify-content-center">
           <!-- Cards game content -->
         </div>
-      </div>
-      <!-- Timer and Restart Button -->
-      <div class="text-end d-flex align-items-center gap-2">
-        <button id="restart-button" class="btn">Restart Game</button>
-        <span id="game-timer" class="game-timer">01:00</span>
       </div>
     </section>
 
