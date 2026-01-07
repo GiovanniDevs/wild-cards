@@ -462,19 +462,28 @@
 		console.log('Card 1:', card1.dataset.face, '- Container index:', index1);
 		console.log('Card 2:', card2.dataset.face, '- Container index:', index2);
 		
-		// Get positions in viewport coordinates
+		// Get grid position for reference frame
+		const gridRect = parent.getBoundingClientRect();
+		
+		// Get positions relative to the grid container (not viewport)
 		const rect1 = container1.getBoundingClientRect();
 		const rect2 = container2.getBoundingClientRect();
 		
-		console.log('=== Starting Visual Swap ===');
-		console.log('Card 1 position - X:', rect1.left.toFixed(2), 'Y:', rect1.top.toFixed(2));
-		console.log('Card 2 position - X:', rect2.left.toFixed(2), 'Y:', rect2.top.toFixed(2));
+		// Calculate positions relative to grid container
+		const pos1X = rect1.left - gridRect.left;
+		const pos1Y = rect1.top - gridRect.top;
+		const pos2X = rect2.left - gridRect.left;
+		const pos2Y = rect2.top - gridRect.top;
 		
-		// Calculate the distance each card needs to travel in viewport coordinates
-		const deltaX1 = rect2.left - rect1.left;
-		const deltaY1 = rect2.top - rect1.top;
-		const deltaX2 = rect1.left - rect2.left;
-		const deltaY2 = rect1.top - rect2.top;
+		console.log('=== Starting Visual Swap ===');
+		console.log('Card 1 position (relative to grid) - X:', pos1X.toFixed(2), 'Y:', pos1Y.toFixed(2));
+		console.log('Card 2 position (relative to grid) - X:', pos2X.toFixed(2), 'Y:', pos2Y.toFixed(2));
+		
+		// Calculate the distance each card needs to travel (grid-relative)
+		const deltaX1 = pos2X - pos1X;
+		const deltaY1 = pos2Y - pos1Y;
+		const deltaX2 = pos1X - pos2X;
+		const deltaY2 = pos1Y - pos2Y;
 		
 		console.log('Card 1 will move:', deltaX1.toFixed(2), 'px X,', deltaY1.toFixed(2), 'px Y');
 		console.log('Card 2 will move:', deltaX2.toFixed(2), 'px X,', deltaY2.toFixed(2), 'px Y');
