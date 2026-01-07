@@ -78,10 +78,34 @@
       col.appendChild(card);
       gridEl.appendChild(col);
     });
+
+    // Step 1: Swap Positions of unMatched Cards 
+		// getUnmatchedFaceDownCards() after board is built
+		setTimeout(() => {
+			console.log('=== Step 1 Test: getUnmatchedFaceDownCards() ===');
+			const eligible = getUnmatchedFaceDownCards();
+			console.log('Test Result: Found', eligible.length, 'eligible cards');
+			console.log('Eligible card faces:', eligible.map(c => c.dataset.face));
+			console.log('=== End Test ===');
+			
+			// Phase 2: Test selectCardsToSwap() automatically
+			console.log('=== Step 2 Test: selectCardsToSwap() ===');
+			selectCardsToSwap(eligible);
+			console.log('=== End Test ===');
+		}, 100);
+
   }
 
   let flipped = [];
   let lockBoard = false;
+
+  // Step 1: Swap Positions of unMatched Cards 
+	// Card swapping feature - Step 1: Global variables
+	let swapInterval = null;
+	const SWAP_INTERVAL_MS = 12000;  // 12 seconds (between 10-15)
+	const PREVIEW_DURATION = 500;    // Visual feedback before swap
+	const SWAP_DURATION = 600;       // Animation duration
+
 
   // Timer setup (1 minute)
 
@@ -194,10 +218,27 @@
   }
 
   function resetFlip(matched) {
-    flipped = [];
-    lockBoard = false;
-    if (matched) checkWin();
-  }
+		flipped = [];
+		lockBoard = false;
+		// optionally check for win when matched
+		if (matched) {
+			// Step 1: Swap Positions of unMatched Cards 
+			// Log eligible cards after a match pair in the console log
+			setTimeout(() => {
+				console.log('=== After Match: Test Result - getUnmatchedFaceDownCards() ===');
+				const eligible = getUnmatchedFaceDownCards();
+				console.log('Match found! Eligible cards now:', eligible.length);
+				console.log('Eligible card faces:', eligible.map(c => c.dataset.face));
+				console.log('=== End Test ===');
+				
+				// Phase 2: Test selectCardsToSwap() automatically after match
+				console.log('=== After Match: Test selectCardsToSwap() ===');
+				selectCardsToSwap(eligible);
+				console.log('=== End Test ===');
+			}, 100);
+			checkWin();
+		}
+	}
 
   function checkWin() {
     const remaining = gridEl.querySelectorAll(".card:not(.matched)");
@@ -206,6 +247,74 @@
       showWinModal();
     }
   }
+
+  // Step 1: Swap Positions of unMatched Cards
+	// Phase 2: Core Functions - 2.1 getUnmatchedFaceDownCards()
+	// Purpose: Get all cards eligible for swapping
+	function getUnmatchedFaceDownCards() {
+		const allCards = gridEl.querySelectorAll('.card');
+		const eligibleCards = Array.from(allCards).filter(card => {
+			return !card.classList.contains('matched') && 
+			       !card.classList.contains('flipped');
+		});
+		
+		// Test logging
+		console.log('Eligible cards for swapping:', eligibleCards.length);
+		console.log('Total cards:', allCards.length);
+		console.log('Matched cards:', gridEl.querySelectorAll('.card.matched').length);
+		console.log('Flipped cards:', gridEl.querySelectorAll('.card.flipped').length);
+		
+		return eligibleCards;
+	}
+
+	// Phase 2: Core Functions - 2.2 selectCardsToSwap(eligibleCards)
+	// Purpose: Randomly select 2 cards to swap
+	function selectCardsToSwap(eligibleCards) {
+		if (eligibleCards.length < 2) {
+			console.log('selectCardsToSwap: Not enough eligible cards (< 2), skipping swap');
+			return null;
+		}
+		
+		// Shuffle and pick first 2
+		const shuffled = shuffle(eligibleCards.slice());
+		const selectedCards = [shuffled[0], shuffled[1]];
+		
+		// Test logging
+		console.log('=== selectCardsToSwap: Cards Selected for Swap ===');
+		console.log('Eligible cards available:', eligibleCards.length);
+		console.log('Card 1 selected:', selectedCards[0].dataset.face);
+		console.log('Card 2 selected:', selectedCards[1].dataset.face);
+		console.log('Swapping:', selectedCards[0].dataset.face, '↔', selectedCards[1].dataset.face);
+		console.log('=== End Selection ===');
+		
+		return selectedCards;
+	}
+
+  // Step 1 Testing: Helper function to check eligible cards anytime
+	// Call this from the browser console: testEligibleCards()
+	window.testEligibleCards = function() {
+		console.log('=== Manual Test: getUnmatchedFaceDownCards() ===');
+		const eligible = getUnmatchedFaceDownCards();
+		console.log('Eligible cards:', eligible.length);
+		console.log('Eligible card faces:', eligible.map(c => c.dataset.face));
+		console.log('=== End Test ===');
+		return eligible.length;
+	};
+
+	// Phase 2 Testing: Helper function to test card selection
+	// Call this from the browser console: testCardSelection()
+	window.testCardSelection = function() {
+		console.log('=== Manual Test: selectCardsToSwap() ===');
+		const eligible = getUnmatchedFaceDownCards();
+		const selected = selectCardsToSwap(eligible);
+		if (selected) {
+			console.log('Selection successful!');
+		} else {
+			console.log('Selection failed: Not enough eligible cards');
+		}
+		console.log('=== End Test ===');
+		return selected;
+	};
 
   // ------------ START of game modals section ------------
 
