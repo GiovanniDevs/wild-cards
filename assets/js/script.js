@@ -141,6 +141,18 @@
     });
   });
 
+  // Sound effects for match
+  const matchSound = new Audio("assets/sounds/pop-win-casino-winning-398059.mp3");
+  matchSound.volume = 0.5; // Set volume to 50%
+
+  function playMatchSound() {
+    matchSound.currentTime = 0; // Reset to start
+    matchSound.play().catch((err) => {
+      console.warn("Could not play sound:", err);
+    });
+  }
+
+
   // Format time to seconds
   function formatTime(seconds) {
     const mm = String(Math.floor(seconds / 60)).padStart(2, "0");
@@ -223,6 +235,7 @@
       if (a.dataset.face === b.dataset.face) {
         a.classList.add("matched");
         b.classList.add("matched");
+        playMatchSound();
         resetFlip(true);
       } else {
         setTimeout(() => {
