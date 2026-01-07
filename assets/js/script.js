@@ -203,7 +203,7 @@
     const remaining = gridEl.querySelectorAll(".card:not(.matched)");
     if (remaining.length === 0) {
       stopTimer();
-      setTimeout(() => alert("Congratulations — you found all pairs!"), 200);
+      showWinModal();
     }
   }
 
