@@ -58,7 +58,7 @@
 
     cards.forEach((face, idx) => {
       const col = document.createElement("div");
-      col.className = "col-4 col-md-3 d-flex justify-content-center";
+      col.className = "col-3 d-flex justify-content-center";
 
       const card = document.createElement("div");
       card.className = "card";
@@ -623,10 +623,19 @@
     const modal = document.getElementById("win-modal");
     modal.style.display = "flex";
 
+    const score = calcScore();
+
     //Add game stats
     document.getElementById(
       "win-final-stats"
-    ).textContent = `Time left: ${timeLeft}s`;
+    ).textContent = `Final score: ${score}`;
+  }
+
+  function calcScore() {
+    let level = getDifficultySeconds();
+    let factor = level / 10;
+    let score = timeLeft * factor;
+    return score;
   }
 
   //   Show lose modal
@@ -696,7 +705,9 @@
       localStorage.setItem("playerName", name);
       setWelcome(name);
       if (userModalEl && window.bootstrap) {
-        const inst = window.bootstrap.Modal.getInstance(userModalEl) || new window.bootstrap.Modal(userModalEl);
+        const inst =
+          window.bootstrap.Modal.getInstance(userModalEl) ||
+          new window.bootstrap.Modal(userModalEl);
         inst.hide();
       }
     };
@@ -734,7 +745,8 @@
           return;
         }
         const userModal = new window.bootstrap.Modal(userModalEl);
-        if (usernameInput) usernameInput.value = localStorage.getItem("playerName") || "";
+        if (usernameInput)
+          usernameInput.value = localStorage.getItem("playerName") || "";
         userModal.show();
         if (usernameInput) usernameInput.focus();
       });
