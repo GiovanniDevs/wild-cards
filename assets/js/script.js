@@ -214,17 +214,16 @@
     const modal = document.getElementById("win-modal");
     modal.style.display = "flex";
 
-    // Optional: Add game stats
-    // document.getElementById('final-stats').textContent = `Time: ${timeElapsed}s`;
+    //Add game stats
+    document.getElementById(
+      "win-final-stats"
+    ).textContent = `Time left: ${timeLeft}s`;
   }
 
   //   Show lose modal
   function showLoseModal() {
     const modal = document.getElementById("lose-modal");
     modal.style.display = "flex";
-
-    // Optional: Add game stats
-    // document.getElementById('final-stats').textContent = `Time: ${timeElapsed}s`;
   }
 
   // Hide the modal and restart
