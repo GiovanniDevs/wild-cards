@@ -2,15 +2,19 @@
   --color-01: #5f4534;
   --color-02: #f0dfc1;
   --color-03: #c26565;
-  --color-highlight: #2cceab;
-  --color-03: #c26565;
-  --font-family: 'Arial, sans-serif';
+  --font-family: "Arial, sans-serif";
 }
 
 @keyframes colorChange {
-  0% { color: var(--color-01); }
-  50% { color: var(--color-highlight); }
-  100% { color: var(--color-01); }
+  0% {
+    color: var(--color-01);
+  }
+  50% {
+    color: var(--color-highlight);
+  }
+  100% {
+    color: var(--color-01);
+  }
 }
 
 /* body styling */
@@ -25,28 +29,14 @@ body {
   min-height: 100vh;
 }
 
-/* heading styling */
-.heading {
-  text-align: center;
-  font-size: 64px;
+header {
+  color: var(--color-02);
+  background-color: var(--color-01);
 }
 
-section summary #dropdown-btn,
-#dropdown-btn {
-  margin: 0;
-  cursor: pointer;
-  user-select: none;
-  padding: 10px 0;
-  animation: colorChange 3s infinite;
-}
-
-details summary {
-  list-style: none;
-  padding-left: 0;
-}
-
-.rules-card {
-  background-color: #ffffff;
+Footer {
+  background-color: var(--color-01);
+  color: var(--color-02);
 }
 
 /* Game area styling */

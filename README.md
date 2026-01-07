@@ -66,12 +66,12 @@ The site uses Bootstrap components. Key UI features include:
 
 ### Member who worked on this project.
 
-**Terence Reilly** Wireframe,
+**Terence Reilly**
 
-**Giovanni Devs** Github Master,
+**Giovanni Devs**
 
 **Iain Kirkham** 
 
-**Viktor Goönczöl** HTML (Header, Footer), CSS, Cards style, Readme
+**Viktor Goönczöl**
 
 **Valentino Farias** 
