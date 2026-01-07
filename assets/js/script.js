@@ -390,13 +390,11 @@
 
 
 
-	// Swap & move unMatched Cards feature
-  // Core Functions - getCardContainer(card)
-	// Purpose: Get the .col-4 parent container of a card
+  // Swap & move unMatched Cards feature
+	// Core Functions - getCardContainer(card)
+	// Purpose: Get the .col-3 parent container of a card
 	function getCardContainer(card) {
-		const container = card.closest('.col-4');
-		
-		// Test logging
+		const container = card.closest('.col-3');		// Test logging
 		if (container) {
 			console.log('getCardContainer: Found container for card', card.dataset.face);
 		} else {
@@ -464,24 +462,22 @@
 		console.log('Card 1:', card1.dataset.face, '- Container index:', index1);
 		console.log('Card 2:', card2.dataset.face, '- Container index:', index2);
 		
-		// Get grid container position for relative calculations
-		const gridRect = parent.getBoundingClientRect();
-		
-		// Get initial positions (center points) before any changes
-		const firstRect1 = container1.getBoundingClientRect();
-		const firstRect2 = container2.getBoundingClientRect();
-		
-		// Calculate center points relative to grid container (not viewport)
-		// This prevents large/negative values when page is scrolled or grid is positioned
-		const firstCenterX1 = (firstRect1.left - gridRect.left) + firstRect1.width / 2;
-		const firstCenterY1 = (firstRect1.top - gridRect.top) + firstRect1.height / 2;
-		const firstCenterX2 = (firstRect2.left - gridRect.left) + firstRect2.width / 2;
-		const firstCenterY2 = (firstRect2.top - gridRect.top) + firstRect2.height / 2;
+		// Get positions in viewport coordinates
+		const rect1 = container1.getBoundingClientRect();
+		const rect2 = container2.getBoundingClientRect();
 		
 		console.log('=== Starting Visual Swap ===');
-		console.log('Grid container position:', gridRect.left.toFixed(2), gridRect.top.toFixed(2));
-		console.log('Card 1 initial center (relative to grid):', firstCenterX1.toFixed(2), firstCenterY1.toFixed(2));
-		console.log('Card 2 initial center (relative to grid):', firstCenterX2.toFixed(2), firstCenterY2.toFixed(2));
+		console.log('Card 1 position - X:', rect1.left.toFixed(2), 'Y:', rect1.top.toFixed(2));
+		console.log('Card 2 position - X:', rect2.left.toFixed(2), 'Y:', rect2.top.toFixed(2));
+		
+		// Calculate the distance each card needs to travel in viewport coordinates
+		const deltaX1 = rect2.left - rect1.left;
+		const deltaY1 = rect2.top - rect1.top;
+		const deltaX2 = rect1.left - rect2.left;
+		const deltaY2 = rect1.top - rect2.top;
+		
+		console.log('Card 1 will move:', deltaX1.toFixed(2), 'px X,', deltaY1.toFixed(2), 'px Y');
+		console.log('Card 2 will move:', deltaX2.toFixed(2), 'px X,', deltaY2.toFixed(2), 'px Y');
 		
 		// Add transition class and prepare for animation
 		container1.classList.add('swapping');
@@ -489,27 +485,15 @@
 		container1.style.transformOrigin = 'center center';
 		container2.style.transformOrigin = 'center center';
 		
-		// Calculate the distance each card needs to travel (relative to grid)
-		// Card 1 needs to move to Card 2's position
-		const deltaX1 = firstCenterX2 - firstCenterX1;
-		const deltaY1 = firstCenterY2 - firstCenterY1;
-		// Card 2 needs to move to Card 1's position
-		const deltaX2 = firstCenterX1 - firstCenterX2;
-		const deltaY2 = firstCenterY1 - firstCenterY2;
-		
-		console.log('Card 1 will move:', deltaX1.toFixed(2), 'px X,', deltaY1.toFixed(2), 'px Y');
-		console.log('Card 2 will move:', deltaX2.toFixed(2), 'px X,', deltaY2.toFixed(2), 'px Y');
-		
-		// Animate cards to each other's positions
-		// Start from current position (0, 0) and animate to target position
+		// Start from current position (0, 0)
 		container1.style.transform = `translate(0, 0)`;
 		container2.style.transform = `translate(0, 0)`;
 		
-		// Force reflow
+		// Force reflow to ensure the initial state is rendered
 		void container1.offsetHeight;
 		void container2.offsetHeight;
 		
-		// Animate to target positions
+		// Animate to target positions using requestAnimationFrame
 		requestAnimationFrame(() => {
 			requestAnimationFrame(() => {
 				console.log('Animating cards to new positions...');
@@ -543,14 +527,6 @@
 			container2.classList.remove('swapping');
 			
 			console.log('=== Swap Complete ===');
-		}, SWAP_DURATION);
-		
-		// After animation, remove transform and classes
-		setTimeout(() => {
-			container1.style.transform = '';
-			container2.style.transform = '';
-			container1.classList.remove('swapping');
-			container2.classList.remove('swapping');
 		}, SWAP_DURATION);
 		
 		// Verify swap
