@@ -83,11 +83,7 @@
       gridEl.appendChild(col);
     });
 
-
-// FIRST push the new branch to the REMOTE in case anything goes wrong
-// branch name: auto-swap-move-card-feature 
-
-    // Swap & move unMatched Cards feature
+ // Swap & move unMatched Cards feature
 		// getUnmatchedFaceDownCards() after board is built
 		setTimeout(() => {
 			console.log('=== Step 1 Test: getUnmatchedFaceDownCards() ===');
@@ -105,7 +101,7 @@
 		startSwapInterval();
   }
 
-  // Global Variables 
+   // Global Variables 
   let flipped = [];
   let lockBoard = false;
   // Swap & move unMatched Cards feature
@@ -114,6 +110,39 @@
 	const SWAP_INTERVAL_MS = 12000;  // 12 seconds (between 10-15)
 	const PREVIEW_DURATION = 500;    // Visual feedback before swap
 	const SWAP_DURATION = 600;       // Animation duration
+
+  // Interval Management - stopSwapInterval()
+	// Purpose: Stop swapping (e.g., game won, restart)
+	function stopSwapInterval() {
+		if (swapInterval) {
+			clearInterval(swapInterval);
+			swapInterval = null;
+			console.log('Swap interval stopped');
+		}
+	}
+
+ // Interval Management - startSwapInterval()
+	function startSwapInterval() {
+		// Clear any existing interval
+		if (swapInterval) {
+			clearInterval(swapInterval);
+			console.log('Cleared existing swap interval');
+		}
+		
+		swapInterval = setInterval(() => {
+			changeOneUnmatchedCard();
+		}, SWAP_INTERVAL_MS);
+		
+		console.log('Swap interval started - will swap cards every', SWAP_INTERVAL_MS / 1000, 'seconds');
+	}
+
+
+
+
+
+
+
+
 
   // Timer setup (1 minute)
   const timerEl = document.getElementById("game-timer"); // element added in index.html
@@ -282,6 +311,10 @@
 		}
 	}
 
+
+
+
+
   function checkWin() {
     const remaining = gridEl.querySelectorAll(".card:not(.matched)");
     if (remaining.length === 0) {
@@ -296,7 +329,7 @@
   // Swap & move unMatched Cards feature
 	// Phase 2: Core Functions - 2.1 getUnmatchedFaceDownCards()
 	// Purpose: Get all cards eligible for swapping
-	function getUnmatchedFaceDownCards() {
+		function getUnmatchedFaceDownCards() {
 		const allCards = gridEl.querySelectorAll('.card');
 		const eligibleCards = Array.from(allCards).filter(card => {
 			return !card.classList.contains('matched') && 
@@ -311,6 +344,12 @@
 		
 		return eligibleCards;
 	}
+
+
+
+
+
+
 
   // Swap & move unMatched Cards feature 
 	// Phase 2: Core Functions - 2.2 selectCardsToSwap(eligibleCards)
@@ -336,6 +375,21 @@
 		return selectedCards;
 	}
 
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
 	// Swap & move unMatched Cards feature
   // Core Functions - getCardContainer(card)
 	// Purpose: Get the .col-4 parent container of a card
@@ -351,6 +405,11 @@
 		
 		return container;
 	}
+  
+
+
+
+
   // Swap & move unMatched Cards feature
 	// addVisualFeedback(card1, card2)
 	// Purpose: Add pulse/scale/wiggle animation before swap
@@ -371,6 +430,14 @@
 			console.log('Visual feedback removed after', PREVIEW_DURATION, 'ms');
 		}, PREVIEW_DURATION);
 	}
+
+
+
+
+
+
+
+
   
   // Swap & move unMatched Cards feature
 	// Core Functions - 2.5 swapCardPositions(card1, card2)
@@ -495,6 +562,29 @@
 		console.log('=== Swap Complete ===');
 	}
 
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
   // Swap & move unMatched Cards feature
 	// Core Functions - changeOneUnmatchedCard() (Main Function)
 	// Purpose: Orchestrate the swap process
@@ -537,32 +627,21 @@
 		}, PREVIEW_DURATION);
 	}
 
-  // Swap & move unMatched Cards feature
-	// Purpose: Start the Automatic cardswapping of 2 random unmatched cards evrery 12 seconds 
-  // Interval Management - startSwapInterval()
-	function startSwapInterval() {
-		// Clear any existing interval
-		if (swapInterval) {
-			clearInterval(swapInterval);
-			console.log('Cleared existing swap interval');
-		}
-		
-		swapInterval = setInterval(() => {
-			changeOneUnmatchedCard();
-		}, SWAP_INTERVAL_MS);
-		
-		console.log('Swap interval started - will swap cards every', SWAP_INTERVAL_MS / 1000, 'seconds');
-	}
 
-	// Interval Management - stopSwapInterval()
-	// Purpose: Stop swapping (e.g., game won, restart)
-	function stopSwapInterval() {
-		if (swapInterval) {
-			clearInterval(swapInterval);
-			swapInterval = null;
-			console.log('Swap interval stopped');
-		}
-	}
+
+
+
+
+
+  
+
+
+
+
+
+
+
+  
 
   // Testing: Helper function to check eligible cards anytime
 	// Call this from the browser console: testEligibleCards()
@@ -575,9 +654,17 @@
 		return eligible.length;
 	};
 
+
+// updated up to here just now 
+
+
+
+
+
+
 	// Testing: Helper function to test card selection
 	// Call this from the browser console: testCardSelection()
-	window.testCardSelection = function() {
+		window.testCardSelection = function() {
 		console.log('=== Manual Test: selectCardsToSwap() ===');
 		const eligible = getUnmatchedFaceDownCards();
 		const selected = selectCardsToSwap(eligible);
@@ -589,6 +676,10 @@
 		console.log('=== End Test ===');
 		return selected;
 	};
+
+
+
+
    
   // Swap & move unMatched Cards feature
 	// Helper function to test full swap process
@@ -622,13 +713,18 @@
 		return selected;
 	};
 
+
+
+
 	// Testing: Helper function to test main swap orchestration
 	// Call this from the browser console: testChangeOneCard()
-	window.testChangeOneCard = function() {
+		window.testChangeOneCard = function() {
 		console.log('=== Manual Test: changeOneUnmatchedCard() ===');
 		changeOneUnmatchedCard();
 		console.log('=== Test Initiated ===');
 	};
+
+  
 
   // ------------ END of main part of the Swap & move unMatched Cards feature section ------------
 
