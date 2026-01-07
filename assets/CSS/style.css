@@ -1,29 +1,72 @@
 :root {
   --color-01: #5f4534;
-  --color-highlight: #2cceab;
+  --color-02: #f0dfc1;
   --color-03: #c26565;
+  --color-RGB-01: #ee3636;
+  --color-RGB-02: #fced21;
+  --color-RGB-03: #4ef02a;
+  --color-RGB-04: #2ff0e6;
+  --color-RGB-05: #2a4ef0;
+  --color-RGB-06: #d72af0;
   --font-family: "Arial, sans-serif";
 }
 
 @keyframes colorChange {
-  0% {
-    color: var(--color-01);
-  }
-  50% {
-    color: var(--color-highlight);
-  }
-  100% {
-    color: var(--color-01);
-  }
+  0% {color: var(--color-RGB-01);}
+  15% {color: var(--color-RGB-02);}
+  30% {color: var(--color-RGB-03);}
+  45% {color: var(--color-RGB-04);}
+  60% {color: var(--color-RGB-05);}
+  75% {color: var(--color-RGB-06);}
+  100% {color: var(--color-RGB-01);}
 }
 
 /* body styling */
 body {
   color: var(--color-01);
   font-family: var(--font-family);
-  margin: 10px;
+  margin: 0;
   padding: 0;
   background-color: #f0dfc1;
+  display: flex;
+  flex-direction: column;
+  min-height: 100vh;
+}
+
+header {
+  color: var(--color-02);
+  background-color: var(--color-01);
+}
+
+Footer {
+  background-color: var(--color-01);
+  color: var(--color-02);
+}
+
+footer a {
+  color: var(--color-02);
+  text-decoration: none;
+  animation: colorChange 2s infinite;
+}
+
+#Terence {
+  animation-delay: 0s;
+}
+
+#Giovanni {
+  animation-delay: -0.4s;
+}
+
+#Iain {
+  animation-delay: -0.8s;
+}
+
+#Viktor {
+  animation-delay: -1.2s;
+}
+
+#Valentino {
+  animation-delay: -1.6s;
 }
 
 /* Game area styling */
