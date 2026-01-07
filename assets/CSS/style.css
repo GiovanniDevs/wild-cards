@@ -3,9 +3,16 @@
     --color-highlight: #2cceab;
     --color-03: #c26565;
     --font-family: 'Arial, sans-serif';
+    --color-01: #5f4534;
+    --color-highlight: #2cceab;
+    --color-03: #c26565;
+    --font-family: 'Arial, sans-serif';
 }
 
 @keyframes colorChange {
+    0% { color: var(--color-01); }
+    50% { color: var(--color-highlight); }
+    100% { color: var(--color-01); }
     0% { color: var(--color-01); }
     50% { color: var(--color-highlight); }
     100% { color: var(--color-01); }
@@ -18,11 +25,19 @@ body {
     margin: 10px;
     padding: 0;
     background-color: #f0dfc1;
+    color: var(--color-01);
+    font-family: var(--font-family);
+    margin: 10px;
+    padding: 0;
+    background-color: #f0dfc1;
 }
+
 
 
 /* heading styling */
 .heading {
+    text-align: center;
+    font-size: 64px;
     text-align: center;
     font-size: 64px;
 }
@@ -30,9 +45,14 @@ body {
 /* Dropdown rules styling */
 #droppdown-rules {
     animation: colorChange 2s infinite;
+    animation: colorChange 2s infinite;
 }
 
 section summary #dropdown-btn {
+    margin: 0;
+    cursor: pointer;
+    user-select: none;
+    padding: 10px 0;
     margin: 0;
     cursor: pointer;
     user-select: none;
@@ -42,14 +62,22 @@ section summary #dropdown-btn {
 details summary {
     list-style: none;
     padding-left: 0;
+    list-style: none;
+    padding-left: 0;
 }
 
 #dropdown-btn {
+    animation: colorChange 3s infinite;
     animation: colorChange 3s infinite;
 }
 
 #droppdown-rules[open] #dropdown-btn {
     color: var(--color-highlight);
+    color: var(--color-highlight);
+}
+
+.rules-card {
+  background-color: #ffffff;
 }
 
 .rules-card {
@@ -60,9 +88,13 @@ details summary {
 #game-section .row {
 max-width: 350px;
 margin: auto;
+#game-section .row {
+max-width: 350px;
+margin: auto;
 }
 
 /* Memory game grid and card styles */
+.game-container { margin-top: 18px; }
 .game-container { margin-top: 18px; }
 .grid {
   max-width: 380px;
@@ -96,12 +128,18 @@ margin: auto;
   transform: rotateY(0deg);
 }
 .card .card-back img{width:100%;height:100%;object-fit:cover}
+.card .card-back img{width:100%;height:100%;object-fit:cover}
 .card .card-back {
   transform: rotateY(180deg);
 }
 .card.flipped .card-inner { transform: rotateY(180deg); }
 .card.matched { outline: 3px solid #28a745; }
+.card.flipped .card-inner { transform: rotateY(180deg); }
+.card.matched { outline: 3px solid #28a745; }
 
+@media (max-width:420px) {
+  .grid { grid-template-columns: repeat(4, 60px); grid-auto-rows: 80px; gap:8px }
+  .card{width:60px;height:80px}
 @media (max-width:420px) {
   .grid { grid-template-columns: repeat(4, 60px); grid-auto-rows: 80px; gap:8px }
   .card{width:60px;height:80px}
@@ -120,6 +158,7 @@ margin: auto;
   min-width: 64px;
   text-align: center;
   box-shadow: 0 2px 4px rgba(0,0,0,0.06);
+  box-shadow: 0 2px 4px rgba(0,0,0,0.06);
   transition: all 200ms ease;
 }
 
@@ -129,6 +168,7 @@ margin: auto;
   border-color: #ffb703;
   color: #8a5200;
   transform: scale(1.05);
+  box-shadow: 0 4px 8px rgba(255,183,3,0.12);
   box-shadow: 0 4px 8px rgba(255,183,3,0.12);
 }
 
