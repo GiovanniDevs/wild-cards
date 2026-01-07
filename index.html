@@ -31,6 +31,10 @@
                 <p class="text-uppercase fw-bold">
                   A memory game ... with a twist
                 </p>
+                <p id="welcome-msg" class="welcome mt-2">Welcome</p>
+                  <div class="d-flex justify-content-center align-items-center mt-2">
+                    <button id="edit-username-button" class="btn btn-sm btn-link ms-2">Change Name</button>
+                  </div>
               </div>
             </nav>
           </div>
@@ -109,6 +113,50 @@
         <button id="lose-play-again-button" class="btn btn-primary">
           Play Again
         </button>
+      </div>
+    </div>
+
+    <!-- username modal (Bootstrap) -->
+    <div class="modal fade" id="usernameModal" tabindex="-1" aria-labelledby="usernameModalLabel" aria-hidden="true" data-bs-backdrop="static" data-bs-keyboard="false">
+      <div class="modal-dialog modal-dialog-centered">
+        <div class="modal-content">
+          <div class="modal-header">
+            <h5 class="modal-title" id="usernameModalLabel">Welcome</h5>
+          </div>
+          <div class="modal-body">
+            <form id="username-form">
+              <div class="mb-3">
+                <label for="username-input" class="form-label">Enter your name</label>
+                <input type="text" class="form-control" id="username-input" placeholder="Player" required />
+              </div>
+            </form>
+          </div>
+          <div class="modal-footer">
+            <button type="button" id="username-save-button" class="btn btn-primary">Start</button>
+          </div>
+        </div>
+      </div>
+    </div>
+
+    <!-- username modal (Bootstrap) -->
+    <div class="modal fade" id="usernameModal" tabindex="-1" aria-labelledby="usernameModalLabel" aria-hidden="true" data-bs-backdrop="static" data-bs-keyboard="false">
+      <div class="modal-dialog modal-dialog-centered">
+        <div class="modal-content">
+          <div class="modal-header">
+            <h5 class="modal-title" id="usernameModalLabel">Welcome</h5>
+          </div>
+          <div class="modal-body">
+            <form id="username-form">
+              <div class="mb-3">
+                <label for="username-input" class="form-label">Enter your name</label>
+                <input type="text" class="form-control" id="username-input" placeholder="Player" required />
+              </div>
+            </form>
+          </div>
+          <div class="modal-footer">
+            <button type="button" id="username-save-button" class="btn btn-primary">Start</button>
+          </div>
+        </div>
       </div>
     </div>
 
