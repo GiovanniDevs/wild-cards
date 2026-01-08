@@ -7,7 +7,7 @@
     <meta name="description" content="Memory Match Mania. Fun Game." />
     <meta name="keywords" content="memory, play, game, fun, cards" />
 
-    <title>Memory Match Mania</title>
+    <title>Memory Game</title>
   
      
 
@@ -19,39 +19,83 @@
   </head>
 
   <body>
+
+<!-- Menu Game Buttons -->
+    <!-- <div class="d-flex justify-content-center align-items-center mt-2">
+             
+            </div>
+            </div>
+
+              <div class="col-12">
+           
+          </div> -->
+
+<!-- Heading Text & Tagline -->
+ <nav class="navbar navbar-expand-lg bg-body-tertiary modern-header">
+            <div class="container-fluid">
+             
+                <button class="navbar-toggler" type="button" data-bs-toggle="collapse" data-bs-target="#navbarNav"
+                    aria-controls="navbarNav" aria-expanded="false" aria-label="Toggle navigation">
+                    <span class="navbar-toggler-icon"></span>
+                </button>
+              
+                <div class="collapse navbar-collapse" id="navbarNav">
+                  <ul class="navbar-nav">
+                    
+          
+                   
+               
+
+
+                    <li class="nav-item">
+                      <a class="nav-link active" aria-current="page" href="#"
+                        onclick="document.getElementById('restart-button').click(); return false;">Restart Game</a>
+                    </li>
+                    <li class="nav-item">
+                      <a class="nav-link" href="#" onclick="document.getElementById('open-rules').click(); return false;">Rules</a>
+                    </li>
+                    <li class="nav-item">
+                      <a class="nav-link" href="#" onclick="document.getElementById('edit-username-button').click(); return false;">Change</a>
+                    </li>
+                    
+                    </ul>
+                    
+                  
+
+                </div>
+                </div>
+                </nav>
+
+
+
+
+
+
+
+
     <header class="text-center">
       <div class="container">
+        <!-- Hidden buttons for functionality -->
+        <button id="edit-username-button" style="display: none;"></button>
+        <button id="restart-button" style="display: none;"></button>
+        <button id="open-rules" style="display: none;"></button>
         <div class="row">
           <div class="col-12 px-xs-0 text-center my-2">
             <h1 class="rubik-bubbles-regular fw-bold my-lg-2">
-              Memory
+              M E M O R Y
             </h1>
-            
-            <div class="d-flex justify-content-center align-items-center mt-2">
-              <button id="edit-username-button" class="btn btn-primary ms-2">
-                Change Name
-              </button>
-            </div>
+                 
           </div>
           <div class="col-sm-12">
-            <p class="lead my-2">Can you remember and ... keep track?</p>
+            <p class="lead my-0 mb-4">Can you remember and ... keep track?</p>
           </div>
         </div>
 
+        <!-- TIMER -->
         <div class="row">
-          <div class="col-12">
-            <div class="mt-2 fw-bold">
-              <button id="open-rules" class="btn btn-success">
-                See Rules ⚖️
-              </button>
-            </div>
-          </div>
-
-          <!-- Timer and Restart Button -->
+        <!-- Timer and Restart Button -->
           <div class="col-12 d-flex justify-content-center gap-2 my-2">
-            <button id="restart-button" class="btn btn-secondary">
-              Restart Game
-            </button>
+          
             <span id="game-timer" class="game-timer" aria-label="Time remaining"
               >01:00</span
             >
@@ -62,7 +106,7 @@
     <!-- Rules Modal -->
     <div id="rules-modal" class="modal-overlay">
       <div class="modal-content">
-        <h2>⚖️ Rules</h2>
+        <h2>Rules</h2>
         <ul class="mt-2">
           <li>Click on a card to flip it over.</li>
           <li>Try to find a matching pair of cards.</li>
