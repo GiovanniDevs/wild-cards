@@ -179,13 +179,37 @@
 
   // Sound effects for match
   const matchSound = new Audio(
-    "assets/sounds/pop-win-casino-winning-398059.mp3"
+    "assets/sounds/8-bit-powerup-6768.mp3"
   );
   matchSound.volume = 0.5; // Set volume to 50%
+
+  
 
   function playMatchSound() {
     matchSound.currentTime = 0; // Reset to start
     matchSound.play().catch((err) => {
+      console.warn("Could not play sound:", err);
+    });
+  }
+
+    // Sound effect when winning a match
+  const winSound = new Audio("assets/sounds/win-sfx-38507.mp3");
+  winSound.volume = 0.5; // Set volume to 50%
+
+  function playWinSound() {
+    winSound.currentTime = 0; // Reset to start
+    winSound.play().catch((err) => {
+      console.warn("Could not play sound:", err);
+    });
+  }
+
+  // Sound effect when losing
+  const loseSound = new Audio("assets/sounds/8-bit-video-game-fail-version-2-145478.mp3");
+  loseSound.volume = 0.5; // Set volume to 50%
+
+  function playLoseSound() {
+    loseSound.currentTime = 0; // Reset to start
+    loseSound.play().catch((err) => {
       console.warn("Could not play sound:", err);
     });
   }
@@ -689,6 +713,7 @@
 
   // Shows winning modal
   function showWinModal() {
+    playWinSound();
     const modal = document.getElementById("win-modal");
     modal.style.display = "flex";
 
@@ -709,6 +734,7 @@
 
   //   Show lose modal
   function showLoseModal() {
+    playLoseSound();
     const modal = document.getElementById("lose-modal");
     modal.style.display = "flex";
   }
