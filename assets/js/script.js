@@ -83,23 +83,7 @@
       gridEl.appendChild(col);
     });
 
-    // Swap & move unMatched Cards feature
-    // getUnmatchedFaceDownCards() after board is built
-    setTimeout(() => {
-      console.log("=== Step 1 Test: getUnmatchedFaceDownCards() ===");
-      const eligible = getUnmatchedFaceDownCards();
-      console.log("Test Result: Found", eligible.length, "eligible cards");
-      console.log(
-        "Eligible card faces:",
-        eligible.map((c) => c.dataset.face)
-      );
-      console.log("=== End Test ===");
-
-      // Phase 2: Test selectCardsToSwap() automatically
-      console.log("=== Step 2 Test: selectCardsToSwap() ===");
-      selectCardsToSwap(eligible);
-      console.log("=== End Test ===");
-    }, 100);
+    // allow layout to settle before starting the swap interval
 
     startSwapInterval();
   }
@@ -115,37 +99,28 @@
   const SWAP_DURATION = 600; // Animation duration
 
   // Interval Management - stopSwapInterval()
-	// Purpose: Stop swapping (e.g., game won, restart)
-	function stopSwapInterval() {
-		if (swapInterval) {
-			clearInterval(swapInterval);
-			swapInterval = null;
-			console.log('Swap interval stopped');
-		}
-	}
+  // Purpose: Stop swapping (e.g., game won, restart)
+  function stopSwapInterval() {
+    if (swapInterval) {
+      clearInterval(swapInterval);
+      swapInterval = null;
+      // swap interval stopped
+    }
+  }
 
- // Interval Management - startSwapInterval()
-	function startSwapInterval() {
-		// Clear any existing interval
-		if (swapInterval) {
-			clearInterval(swapInterval);
-			console.log('Cleared existing swap interval');
-		}
-		
-		swapInterval = setInterval(() => {
-			changeOneUnmatchedCard();
-		}, SWAP_INTERVAL_MS);
-		
-		console.log('Swap interval started - will swap cards every', SWAP_INTERVAL_MS / 1000, 'seconds');
-	}
+  // Interval Management - startSwapInterval()
+  function startSwapInterval() {
+    // Clear any existing interval
+    if (swapInterval) {
+      clearInterval(swapInterval);
+    }
 
+    swapInterval = setInterval(() => {
+      changeOneUnmatchedCard();
+    }, SWAP_INTERVAL_MS);
 
-
-
-
-
-
-
+    // swap interval started
+  }
 
   // Timer setup (1 minute)
   const timerEl = document.getElementById("game-timer"); // element added in index.html
@@ -178,12 +153,8 @@
   });
 
   // Sound effects for match
-  const matchSound = new Audio(
-    "assets/sounds/8-bit-powerup-6768.mp3"
-  );
+  const matchSound = new Audio("assets/sounds/8-bit-powerup-6768.mp3");
   matchSound.volume = 0.5; // Set volume to 50%
-
-  
 
   function playMatchSound() {
     matchSound.currentTime = 0; // Reset to start
@@ -192,7 +163,7 @@
     });
   }
 
-    // Sound effect when winning a match
+  // Sound effect when winning a match
   const winSound = new Audio("assets/sounds/win-sfx-38507.mp3");
   winSound.volume = 0.5; // Set volume to 50%
 
@@ -204,7 +175,9 @@
   }
 
   // Sound effect when losing
-  const loseSound = new Audio("assets/sounds/8-bit-video-game-fail-version-2-145478.mp3");
+  const loseSound = new Audio(
+    "assets/sounds/8-bit-video-game-fail-version-2-145478.mp3"
+  );
   loseSound.volume = 0.5; // Set volume to 50%
 
   function playLoseSound() {
@@ -325,29 +298,13 @@
       // Swap & move unMatched Cards feature
       // Log eligible cards after a match pair in the console log
       setTimeout(() => {
-        console.log(
-          "=== After Match: Test Result - getUnmatchedFaceDownCards() ==="
-        );
         const eligible = getUnmatchedFaceDownCards();
-        console.log("Match found! Eligible cards now:", eligible.length);
-        console.log(
-          "Eligible card faces:",
-          eligible.map((c) => c.dataset.face)
-        );
-        console.log("=== End Test ===");
-
-        // Phase 2: Test selectCardsToSwap() automatically after match
-        console.log("=== After Match: Test selectCardsToSwap() ===");
+        // optionally trigger swap-selection after a match
         selectCardsToSwap(eligible);
-        console.log("=== End Test ===");
       }, 100);
       checkWin();
     }
   }
-
-
-
-
 
   function checkWin() {
     const remaining = gridEl.querySelectorAll(".card:not(.matched)");
@@ -361,256 +318,165 @@
 
   // ------------ START of main part of the Swap & move unMatched Cards feature section ------------
   // Swap & move unMatched Cards feature
-	// Phase 2: Core Functions - 2.1 getUnmatchedFaceDownCards()
-	// Purpose: Get all cards eligible for swapping
-		function getUnmatchedFaceDownCards() {
-		const allCards = gridEl.querySelectorAll('.card');
-		const eligibleCards = Array.from(allCards).filter(card => {
-			return !card.classList.contains('matched') && 
-			       !card.classList.contains('flipped');
-		});
-		
-		// Test logging
-		console.log('Eligible cards for swapping:', eligibleCards.length);
-		console.log('Total cards:', allCards.length);
-		console.log('Matched cards:', gridEl.querySelectorAll('.card.matched').length);
-		console.log('Flipped cards:', gridEl.querySelectorAll('.card.flipped').length);
-		
-		return eligibleCards;
-	}
-
-
-
-
-
-
-
-  // Swap & move unMatched Cards feature 
-	// Phase 2: Core Functions - 2.2 selectCardsToSwap(eligibleCards)
-	// Purpose: Randomly select 2 cards to swap
-	function selectCardsToSwap(eligibleCards) {
-		if (eligibleCards.length < 2) {
-			console.log('selectCardsToSwap: Not enough eligible cards (< 2), skipping swap');
-			return null;
-		}
-		
-		// Shuffle and pick first 2
-		const shuffled = shuffle(eligibleCards.slice());
-		const selectedCards = [shuffled[0], shuffled[1]];
-		
-		// Test logging
-		console.log('=== selectCardsToSwap: Cards Selected for Swap ===');
-		console.log('Eligible cards available:', eligibleCards.length);
-		console.log('Card 1 selected:', selectedCards[0].dataset.face);
-		console.log('Card 2 selected:', selectedCards[1].dataset.face);
-		console.log('Swapping:', selectedCards[0].dataset.face, '↔', selectedCards[1].dataset.face);
-		console.log('=== End Selection ===');
-		
-		return selectedCards;
-	}
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
+  // Phase 2: Core Functions - 2.1 getUnmatchedFaceDownCards()
+  // Purpose: Get all cards eligible for swapping
+  function getUnmatchedFaceDownCards() {
+    const allCards = gridEl.querySelectorAll(".card");
+    const eligibleCards = Array.from(allCards).filter((card) => {
+      return (
+        !card.classList.contains("matched") &&
+        !card.classList.contains("flipped")
+      );
+    });
+    return eligibleCards;
+  }
 
   // Swap & move unMatched Cards feature
-	// Core Functions - getCardContainer(card)
-	// Purpose: Get the .col-3 parent container of a card
-	function getCardContainer(card) {
-		const container = card.closest('.col-3');		// Test logging
-		if (container) {
-			console.log('getCardContainer: Found container for card', card.dataset.face);
-		} else {
-			console.warn('getCardContainer: No .col-4 container found for card', card.dataset.face);
-		}
-		
-		return container;
-	}
-  
+  // Phase 2: Core Functions - 2.2 selectCardsToSwap(eligibleCards)
+  // Purpose: Randomly select 2 cards to swap
+  function selectCardsToSwap(eligibleCards) {
+    if (eligibleCards.length < 2) {
+      return null;
+    }
 
-
-
+    // Shuffle and pick first 2
+    const shuffled = shuffle(eligibleCards.slice());
+    const selectedCards = [shuffled[0], shuffled[1]];
+    return selectedCards;
+  }
 
   // Swap & move unMatched Cards feature
-	// addVisualFeedback(card1, card2)
-	// Purpose: Add pulse/scale/wiggle animation before swap
-	function addVisualFeedback(card1, card2) {
-		// Add CSS class to both cards
-		card1.classList.add('swap-preview');
-		card2.classList.add('swap-preview');
-		
-		// Test logging
-		console.log('=== addVisualFeedback: Visual feedback added ===');
-		console.log('Card 1:', card1.dataset.face, '- Preview animation started');
-		console.log('Card 2:', card2.dataset.face, '- Preview animation started');
-		
-		// Remove class after PREVIEW_DURATION
-		setTimeout(() => {
-			card1.classList.remove('swap-preview');
-			card2.classList.remove('swap-preview');
-			console.log('Visual feedback removed after', PREVIEW_DURATION, 'ms');
-		}, PREVIEW_DURATION);
-	}
+  // Core Functions - getCardContainer(card)
+  // Purpose: Get the .col-3 parent container of a card
+  function getCardContainer(card) {
+    const container = card.closest(".col-3");
+    if (!container)
+      console.warn(
+        "getCardContainer: container not found",
+        card && card.dataset && card.dataset.face
+      );
+    return container;
+  }
 
-
-
-
-
-
-
-
-  
   // Swap & move unMatched Cards feature
-	// Core Functions - 2.5 swapCardPositions(card1, card2)
-	// Purpose: Physically swap two cards in the DOM
-	function swapCardPositions(card1, card2) {
+  // addVisualFeedback(card1, card2)
+  // Purpose: Add pulse/scale/wiggle animation before swap
+  function addVisualFeedback(card1, card2) {
+    // Add preview class and remove after preview duration
+    card1.classList.add("swap-preview");
+    card2.classList.add("swap-preview");
+    setTimeout(() => {
+      card1.classList.remove("swap-preview");
+      card2.classList.remove("swap-preview");
+    }, PREVIEW_DURATION);
+  }
 
-		// Step 1: Get containers
-		const container1 = getCardContainer(card1);
-		const container2 = getCardContainer(card2);
-		
-		if (!container1 || !container2) {
-			console.error('swapCardPositions: Could not find containers for cards');
-			return;
-		}
-		
-		// Get their positions in grid (index in gridEl.children)
-		const parent = gridEl;
-		const children = Array.from(parent.children);
-		const index1 = children.indexOf(container1);
-		const index2 = children.indexOf(container2);
-		
-		// Test logging
-		console.log('=== swapCardPositions: Swapping Cards ===');
-		console.log('Card 1:', card1.dataset.face, '- Container index:', index1);
-		console.log('Card 2:', card2.dataset.face, '- Container index:', index2);
-		
-		// Get VIEWPORT positions (not grid-relative) for animation
-		const rect1 = container1.getBoundingClientRect();
-		const rect2 = container2.getBoundingClientRect();
-		
-		// Store original positions in viewport coordinates
-		const pos1 = { x: rect1.left, y: rect1.top };
-		const pos2 = { x: rect2.left, y: rect2.top };
-		
-		console.log('=== Starting Visual Swap ===');
-		console.log('Card 1 viewport position - X:', pos1.x.toFixed(2), 'Y:', pos1.y.toFixed(2));
-		console.log('Card 2 viewport position - X:', pos2.x.toFixed(2), 'Y:', pos2.y.toFixed(2));
-		
-		// Calculate distance to move
-		const deltaX1 = pos2.x - pos1.x;
-		const deltaY1 = pos2.y - pos1.y;
-		const deltaX2 = pos1.x - pos2.x;
-		const deltaY2 = pos1.y - pos2.y;
-		
-		console.log('Card 1 will move:', deltaX1.toFixed(2), 'px X,', deltaY1.toFixed(2), 'px Y');
-		console.log('Card 2 will move:', deltaX2.toFixed(2), 'px X,', deltaY2.toFixed(2), 'px Y');
-		
-		// Set up for animation with absolute positioning
-		container1.classList.add('swapping');
-		container2.classList.add('swapping');
-		
-		// Start animation from current position
-		container1.style.transform = `translate(0, 0)`;
-		container2.style.transform = `translate(0, 0)`;
-		
-		// Force reflow
-		void container1.offsetHeight;
-		void container2.offsetHeight;
-		
-		// Animate to target positions
-		requestAnimationFrame(() => {
-			requestAnimationFrame(() => {
-				console.log('Animating cards to new positions...');
-				container1.style.transform = `translate(${deltaX1}px, ${deltaY1}px)`;
-				container2.style.transform = `translate(${deltaX2}px, ${deltaY2}px)`;
-			});
-		});
-		
-		// After animation, swap in DOM using RAF to respect tab visibility
-		let frameCount = 0;
-		const targetFrames = Math.ceil(SWAP_DURATION / 16.67); // ~60fps = 16.67ms per frame
-		
-		const completeSwap = () => {
-			frameCount++;
-			if (frameCount < targetFrames) {
-				requestAnimationFrame(completeSwap);
-				return;
-			}
-			
-			console.log('Animation complete, swapping in DOM...');
-			
-			// Swap the containers in the DOM
-			const tempNode = document.createTextNode('');
-			parent.insertBefore(tempNode, container1);
-			
-			if (container2.nextSibling) {
-				parent.insertBefore(container1, container2.nextSibling);
-			} else {
-				parent.appendChild(container1);
-			}
-			
-			parent.insertBefore(container2, tempNode);
-			parent.removeChild(tempNode);
-			
-			// Remove animation styling
-			container1.style.transform = '';
-			container2.style.transform = '';
-			container1.classList.remove('swapping');
-			container2.classList.remove('swapping');
-			
-			console.log('=== Swap Complete ===');
-		};
-		
-		requestAnimationFrame(completeSwap);
-	}
+  // Swap & move unMatched Cards feature
+  // Core Functions - 2.5 swapCardPositions(card1, card2)
+  // Purpose: Physically swap two cards in the DOM
+  function swapCardPositions(card1, card2) {
+    // Step 1: Get containers
+    const container1 = getCardContainer(card1);
+    const container2 = getCardContainer(card2);
+
+    if (!container1 || !container2) {
+      console.error("swapCardPositions: Could not find containers for cards");
+      return;
+    }
+
+    // Get their positions in grid (index in gridEl.children)
+    const parent = gridEl;
+    const children = Array.from(parent.children);
+    const index1 = children.indexOf(container1);
+    const index2 = children.indexOf(container2);
+
+    // Get viewport positions for animation
+    const rect1 = container1.getBoundingClientRect();
+    const rect2 = container2.getBoundingClientRect();
+    const pos1 = { x: rect1.left, y: rect1.top };
+    const pos2 = { x: rect2.left, y: rect2.top };
+    // Calculate distance to move
+    const deltaX1 = pos2.x - pos1.x;
+    const deltaY1 = pos2.y - pos1.y;
+    const deltaX2 = pos1.x - pos2.x;
+    const deltaY2 = pos1.y - pos2.y;
+
+    // Set up for animation with absolute positioning
+    container1.classList.add("swapping");
+    container2.classList.add("swapping");
+
+    // Start animation from current position
+    container1.style.transform = `translate(0, 0)`;
+    container2.style.transform = `translate(0, 0)`;
+
+    // Force reflow
+    void container1.offsetHeight;
+    void container2.offsetHeight;
+
+    // Animate to target positions
+    requestAnimationFrame(() => {
+      requestAnimationFrame(() => {
+        // animate to new positions
+        container1.style.transform = `translate(${deltaX1}px, ${deltaY1}px)`;
+        container2.style.transform = `translate(${deltaX2}px, ${deltaY2}px)`;
+      });
+    });
+
+    // After animation, swap in DOM using RAF to respect tab visibility
+    let frameCount = 0;
+    const targetFrames = Math.ceil(SWAP_DURATION / 16.67); // ~60fps = 16.67ms per frame
+
+    const completeSwap = () => {
+      frameCount++;
+      if (frameCount < targetFrames) {
+        requestAnimationFrame(completeSwap);
+        return;
+      }
+
+      // animation complete, swap in DOM
+
+      // Swap the containers in the DOM
+      const tempNode = document.createTextNode("");
+      parent.insertBefore(tempNode, container1);
+
+      if (container2.nextSibling) {
+        parent.insertBefore(container1, container2.nextSibling);
+      } else {
+        parent.appendChild(container1);
+      }
+
+      parent.insertBefore(container2, tempNode);
+      parent.removeChild(tempNode);
+
+      // Remove animation styling
+      container1.style.transform = "";
+      container2.style.transform = "";
+      container1.classList.remove("swapping");
+      container2.classList.remove("swapping");
+    };
+
+    requestAnimationFrame(completeSwap);
+  }
 
   // Swap & move unMatched Cards feature
   // Core Functions - changeOneUnmatchedCard() (Main Function)
   // Purpose: Orchestrate the swap process
   function changeOneUnmatchedCard() {
-    console.log("=== changeOneUnmatchedCard: Starting Swap Process ===");
+    // Orchestrate a single swap of unmatched face-down cards
 
     // Check if game is locked (user interacting)
-    if (lockBoard) {
-      console.log("changeOneUnmatchedCard: Board is locked, skipping swap");
-      return;
-    }
+    if (lockBoard) return;
 
     // Get eligible cards
     const eligible = getUnmatchedFaceDownCards();
-    if (eligible.length < 2) {
-      console.log(
-        "changeOneUnmatchedCard: Not enough eligible cards (< 2), skipping swap"
-      );
-      return;
-    }
+    if (eligible.length < 2) return;
 
     // Select cards to swap
     const selected = selectCardsToSwap(eligible);
-    if (!selected) {
-      console.log("changeOneUnmatchedCard: Selection failed, skipping swap");
-      return;
-    }
+    if (!selected) return;
 
     const [card1, card2] = selected;
-    if (!card1 || !card2) {
-      console.log(
-        "changeOneUnmatchedCard: Invalid cards selected, skipping swap"
-      );
-      return;
-    }
+    if (!card1 || !card2) return;
 
     // Add visual feedback
     addVisualFeedback(card1, card2);
@@ -618,92 +484,8 @@
     // Wait for preview, then swap
     setTimeout(() => {
       swapCardPositions(card1, card2);
-      console.log("=== changeOneUnmatchedCard: Swap Process Complete ===");
     }, PREVIEW_DURATION);
   }
-
-  // Testing: Helper function to check eligible cards anytime
-	// Call this from the browser console: testEligibleCards()
-	window.testEligibleCards = function() {
-		console.log('=== Manual Test: getUnmatchedFaceDownCards() ===');
-		const eligible = getUnmatchedFaceDownCards();
-		console.log('Eligible cards:', eligible.length);
-		console.log('Eligible card faces:', eligible.map(c => c.dataset.face));
-		console.log('=== End Test ===');
-		return eligible.length;
-	};
-
-
-// updated up to here just now 
-
-
-
-
-
-
-	// Testing: Helper function to test card selection
-	// Call this from the browser console: testCardSelection()
-		window.testCardSelection = function() {
-		console.log('=== Manual Test: selectCardsToSwap() ===');
-		const eligible = getUnmatchedFaceDownCards();
-		const selected = selectCardsToSwap(eligible);
-		if (selected) {
-			console.log('Selection successful!');
-		} else {
-			console.log('Selection failed: Not enough eligible cards');
-		}
-		console.log('=== End Test ===');
-		return selected;
-	};
-
-
-
-
-   
-  // Swap & move unMatched Cards feature
-	// Helper function to test full swap process
-	// Call this from the browser console: testSwapCards()
-	window.testSwapCards = function() {
-		console.log('=== Manual Test: Full Swap Process ===');
-		const eligible = getUnmatchedFaceDownCards();
-		if (eligible.length < 2) {
-			console.log('Not enough eligible cards to swap (need at least 2)');
-			return null;
-		}
-		
-		const selected = selectCardsToSwap(eligible);
-		if (!selected) {
-			console.log('Selection failed');
-			return null;
-		}
-		
-		const [card1, card2] = selected;
-		console.log('Testing swap with:', card1.dataset.face, 'and', card2.dataset.face);
-		
-		// Add visual feedback
-		addVisualFeedback(card1, card2);
-		
-		// Wait for preview, then swap
-		setTimeout(() => {
-			swapCardPositions(card1, card2);
-		}, PREVIEW_DURATION);
-		
-		console.log('=== Swap Test Initiated ===');
-		return selected;
-	};
-
-
-
-
-	// Testing: Helper function to test main swap orchestration
-	// Call this from the browser console: testChangeOneCard()
-		window.testChangeOneCard = function() {
-		console.log('=== Manual Test: changeOneUnmatchedCard() ===');
-		changeOneUnmatchedCard();
-		console.log('=== Test Initiated ===');
-	};
-
-  
 
   // ------------ END of main part of the Swap & move unMatched Cards feature section ------------
 
@@ -721,19 +503,19 @@
     const statsEl = document.getElementById("win-final-stats");
     if (statsEl) statsEl.textContent = `Final score: ${score}`;
 
-    const playerName = localStorage.getItem('playerName') || 'Player';
+    const playerName = localStorage.getItem("playerName") || "Player";
     const entry = {
       name: playerName,
       score: score,
       timeLeft: timeLeft,
       difficulty: currentDifficulty,
-      tstamp: Date.now()
+      tstamp: Date.now(),
     };
     addLeaderboardEntry(entry);
     renderLeaderboard();
 
     // show Bootstrap leaderboard modal if present
-    const lbEl = document.getElementById('leaderboardModal');
+    const lbEl = document.getElementById("leaderboardModal");
     if (lbEl && window.bootstrap) {
       const lbModal = new window.bootstrap.Modal(lbEl);
       lbModal.show();
@@ -866,20 +648,23 @@
 })();
 
 // Leaderboard (localStorage, DOM-based)
-const LEADERBOARD_KEY = 'wildcards_leaderboard';
+const LEADERBOARD_KEY = "wildcards_leaderboard";
 const LEADERBOARD_MAX = 10;
 
 function getLeaderboard() {
   try {
     return JSON.parse(localStorage.getItem(LEADERBOARD_KEY)) || [];
   } catch (e) {
-    console.warn('Leaderboard read error', e);
+    console.warn("Leaderboard read error", e);
     return [];
   }
 }
 
 function saveLeaderboard(list) {
-  localStorage.setItem(LEADERBOARD_KEY, JSON.stringify(list.slice(0, LEADERBOARD_MAX)));
+  localStorage.setItem(
+    LEADERBOARD_KEY,
+    JSON.stringify(list.slice(0, LEADERBOARD_MAX))
+  );
 }
 
 function addLeaderboardEntry(entry) {
@@ -892,28 +677,28 @@ function addLeaderboardEntry(entry) {
 }
 
 function renderLeaderboard() {
-  const container = document.getElementById('leaderboard-list');
+  const container = document.getElementById("leaderboard-list");
   if (!container) return;
   // clear existing
-  container.textContent = '';
+  container.textContent = "";
   const list = getLeaderboard();
   if (list.length === 0) {
-    const p = document.createElement('p');
-    p.className = 'mb-0';
-    p.textContent = 'No scores yet.';
+    const p = document.createElement("p");
+    p.className = "mb-0";
+    p.textContent = "No scores yet.";
     container.appendChild(p);
     return;
   }
 
   list.forEach((r, i) => {
-    const row = document.createElement('div');
-    row.className = 'd-flex justify-content-between align-items-center py-1';
-    const left = document.createElement('div');
+    const row = document.createElement("div");
+    row.className = "d-flex justify-content-between align-items-center py-1";
+    const left = document.createElement("div");
     left.textContent = `#${i + 1} ${r.name}`;
-    const right = document.createElement('div');
-      const meta = `${r.score} pts${r.difficulty ? ' • ' + r.difficulty : ''}`;
-      // Display only score and difficulty (omit time taken and date)
-      right.textContent = meta;
+    const right = document.createElement("div");
+    const meta = `${r.score} pts${r.difficulty ? " • " + r.difficulty : ""}`;
+    // Display only score and difficulty (omit time taken and date)
+    right.textContent = meta;
     row.appendChild(left);
     row.appendChild(right);
     container.appendChild(row);
