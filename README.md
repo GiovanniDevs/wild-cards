@@ -1,19 +1,14 @@
-
 # Wild Cards
-
-## About
-
-This project was a group of 5 task during the lesins.
-
-Wild Cards is a single-page card matching game where players flip cards to find pairs while racing against a timer. The twist: unmatched cards regularly swap positions during gameplay, adding an extra layer of challenge to the classic memory game.
-
-![alt text](<assets/images/For README/Mockup.webp>)
 
 ## Deployment link
 
-```bash
-  https://giovannidevs.github.io/wild-cards/
-```
+https://giovannidevs.github.io/wild-cards/
+
+## About
+
+Wild Cards is a single-page card matching game where players flip cards to find pairs while racing against a timer. The twist: unmatched cards regularly swap positions during gameplay, adding an extra layer of challenge to the classic memory game.
+
+![alt text](<assets/images/For README/mockup.png>)
 
 ## User Value:
 
@@ -37,24 +32,21 @@ Players enjoy a fresh take on the classic memory game with entertaining themes a
 
 ## Technologies Used
 
-- HTML5 – Structure and markup for the web application. 
+- HTML5 – Structure and markup for the web application.
 - CSS3 (with Bootstrap 5) – Styling, layout, and responsive design.
 - JavaScript (ES6) – Game logic, interactivity, and UI behavior.
 - Lighthouse – Accessibility and performance auditing.
 - W3C Markup Validation Service – HTML validation and code quality checks.
-
+- Google Fonts - Rubik Bubbles, Space Grotesk, Sans Serif
 
 ## Wireframes
 
-![App Screenshot](https://external-content.duckduckgo.com/iu/?u=https%3A%2F%2Fimg.jagranjosh.com%2Fimages%2F2023%2FJanuary%2F1712023%2Fragdoll-top-10-cat-breeds.jpg&f=1&nofb=1&ipt=80e8dd07b5dc6855265bfc2b578bdc6b3d5b18cb0108dfa61eaabb49dfd27b59)
-
-![App Screenshot](https://raw.githubusercontent.com/test.png)
+![alt text](<assets/images/For README/wire2.webp>)
+![alt text](<assets/images/For README/wire3.png>)
 
 ## Color Scheme
 
-![alt text](<assets/images/For README/Color-01.png>) #5f4534
-
-![alt text](<assets/images/For README/Color-02.png>) #f0dfc1
+![alt text](<assets/images/For README/wire1.webp>)
 
 ## Deployment procedure
 
@@ -73,16 +65,24 @@ This site is deployed using GitHub Pages, which provides free static site hostin
 
 The site updates automatically whenever changes are pushed to the selected branch.
 
+# Tests results
+
 ## Google Lighthouse
 
-# Tests results
-![App Screenshot](https://external-content.duckduckgo.com/iu/?u=https%3A%2F%2Fimg.jagranjosh.com%2Fimages%2F2023%2FJanuary%2F1712023%2Fragdoll-top-10-cat-breeds.jpg&f=1&nofb=1&ipt=80e8dd07b5dc6855265bfc2b578bdc6b3d5b18cb0108dfa61eaabb49dfd27b59)
+![alt text](<assets/images/For README/deskval.webp>)
+![alt text](<assets/images/For README/mobileVAL.webp>)
 
-## CSS Validation Service
-![App Screenshot](https://raw.githubusercontent.com/test.png)
+## HTML Validation
 
-## Markup Validation Service
-![App Screenshot](https://raw.githubusercontent.com/test.png)
+![alt text](<assets/images/For README/htmlval.png>)
+
+## CSS Validation
+
+![alt text](<assets/images/For README/cssval.png>)
+
+## JS Validation
+
+![alt text](<assets/images/For README/jsval.webp>)
 
 ## Known Issues / Roadmap
 
@@ -113,10 +113,10 @@ AI assisted in generating user stories with acceptance criteria and breaking dow
 
 **Terence Reilly**
 
-**Giovanni Devs**
+**Giovanni D'Amico**
 
-**Iain Kirkham** 
+**Iain Kirkham**
 
 **Viktor Goönczöl**
 
-**Valentino Farias** 
+**Valentino Farias**
