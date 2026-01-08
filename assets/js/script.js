@@ -543,29 +543,6 @@
 		requestAnimationFrame(completeSwap);
 	}
 
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
   // Swap & move unMatched Cards feature
 	// Core Functions - changeOneUnmatchedCard() (Main Function)
 	// Purpose: Orchestrate the swap process
@@ -607,22 +584,6 @@
 			console.log('=== changeOneUnmatchedCard: Swap Process Complete ===');
 		}, PREVIEW_DURATION);
 	}
-
-
-
-
-
-
-
-  
-
-
-
-
-
-
-
-  
 
   // Testing: Helper function to check eligible cards anytime
 	// Call this from the browser console: testEligibleCards()
