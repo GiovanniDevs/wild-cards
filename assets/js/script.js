@@ -48,10 +48,10 @@
 
   function buildBoard(pairs = 8) {
     if (!gridEl) return;
-    
+
     // Phase 3: Stop any existing swap interval when restarting
     stopSwapInterval();
-    
+
     gridEl.innerHTML = "";
     const chosen = pickFaces(pairs);
     const cards = shuffle(chosen.concat(chosen)); // duplicate and shuffle
@@ -83,33 +83,36 @@
       gridEl.appendChild(col);
     });
 
- // Swap & move unMatched Cards feature
-		// getUnmatchedFaceDownCards() after board is built
-		setTimeout(() => {
-			console.log('=== Step 1 Test: getUnmatchedFaceDownCards() ===');
-			const eligible = getUnmatchedFaceDownCards();
-			console.log('Test Result: Found', eligible.length, 'eligible cards');
-			console.log('Eligible card faces:', eligible.map(c => c.dataset.face));
-			console.log('=== End Test ===');
-			
-			// Phase 2: Test selectCardsToSwap() automatically
-			console.log('=== Step 2 Test: selectCardsToSwap() ===');
-			selectCardsToSwap(eligible);
-			console.log('=== End Test ===');
-		}, 100);
+    // Swap & move unMatched Cards feature
+    // getUnmatchedFaceDownCards() after board is built
+    setTimeout(() => {
+      console.log("=== Step 1 Test: getUnmatchedFaceDownCards() ===");
+      const eligible = getUnmatchedFaceDownCards();
+      console.log("Test Result: Found", eligible.length, "eligible cards");
+      console.log(
+        "Eligible card faces:",
+        eligible.map((c) => c.dataset.face)
+      );
+      console.log("=== End Test ===");
 
-		startSwapInterval();
+      // Phase 2: Test selectCardsToSwap() automatically
+      console.log("=== Step 2 Test: selectCardsToSwap() ===");
+      selectCardsToSwap(eligible);
+      console.log("=== End Test ===");
+    }, 100);
+
+    startSwapInterval();
   }
 
-   // Global Variables 
+  // Global Variables
   let flipped = [];
   let lockBoard = false;
   // Swap & move unMatched Cards feature
-	// Card swapping feature - Step 1: Global variables
-	let swapInterval = null;
-	const SWAP_INTERVAL_MS = 12000;  // 12 seconds (between 10-15)
-	const PREVIEW_DURATION = 500;    // Visual feedback before swap
-	const SWAP_DURATION = 600;       // Animation duration
+  // Card swapping feature - Step 1: Global variables
+  let swapInterval = null;
+  const SWAP_INTERVAL_MS = 12000; // 12 seconds (between 10-15)
+  const PREVIEW_DURATION = 500; // Visual feedback before swap
+  const SWAP_DURATION = 600; // Animation duration
 
   // Interval Management - stopSwapInterval()
 	// Purpose: Stop swapping (e.g., game won, restart)
@@ -175,7 +178,9 @@
   });
 
   // Sound effects for match
-  const matchSound = new Audio("assets/sounds/pop-win-casino-winning-398059.mp3");
+  const matchSound = new Audio(
+    "assets/sounds/pop-win-casino-winning-398059.mp3"
+  );
   matchSound.volume = 0.5; // Set volume to 50%
 
   function playMatchSound() {
@@ -184,7 +189,6 @@
       console.warn("Could not play sound:", err);
     });
   }
-
 
   // Format time to seconds
   function formatTime(seconds) {
@@ -290,27 +294,32 @@
   }
 
   function resetFlip(matched) {
-		flipped = [];
-		lockBoard = false;
-		// optionally check for win when matched
-		if (matched) {
-			// Swap & move unMatched Cards feature
-			// Log eligible cards after a match pair in the console log
-			setTimeout(() => {
-				console.log('=== After Match: Test Result - getUnmatchedFaceDownCards() ===');
-				const eligible = getUnmatchedFaceDownCards();
-				console.log('Match found! Eligible cards now:', eligible.length);
-				console.log('Eligible card faces:', eligible.map(c => c.dataset.face));
-				console.log('=== End Test ===');
-				
-				// Phase 2: Test selectCardsToSwap() automatically after match
-				console.log('=== After Match: Test selectCardsToSwap() ===');
-				selectCardsToSwap(eligible);
-				console.log('=== End Test ===');
-			}, 100);
-			checkWin();
-		}
-	}
+    flipped = [];
+    lockBoard = false;
+    // optionally check for win when matched
+    if (matched) {
+      // Swap & move unMatched Cards feature
+      // Log eligible cards after a match pair in the console log
+      setTimeout(() => {
+        console.log(
+          "=== After Match: Test Result - getUnmatchedFaceDownCards() ==="
+        );
+        const eligible = getUnmatchedFaceDownCards();
+        console.log("Match found! Eligible cards now:", eligible.length);
+        console.log(
+          "Eligible card faces:",
+          eligible.map((c) => c.dataset.face)
+        );
+        console.log("=== End Test ===");
+
+        // Phase 2: Test selectCardsToSwap() automatically after match
+        console.log("=== After Match: Test selectCardsToSwap() ===");
+        selectCardsToSwap(eligible);
+        console.log("=== End Test ===");
+      }, 100);
+      checkWin();
+    }
+  }
 
 
 
@@ -544,46 +553,50 @@
 	}
 
   // Swap & move unMatched Cards feature
-	// Core Functions - changeOneUnmatchedCard() (Main Function)
-	// Purpose: Orchestrate the swap process
-	function changeOneUnmatchedCard() {
-		console.log('=== changeOneUnmatchedCard: Starting Swap Process ===');
-		
-		// Check if game is locked (user interacting)
-		if (lockBoard) {
-			console.log('changeOneUnmatchedCard: Board is locked, skipping swap');
-			return;
-		}
-		
-		// Get eligible cards
-		const eligible = getUnmatchedFaceDownCards();
-		if (eligible.length < 2) {
-			console.log('changeOneUnmatchedCard: Not enough eligible cards (< 2), skipping swap');
-			return;
-		}
-		
-		// Select cards to swap
-		const selected = selectCardsToSwap(eligible);
-		if (!selected) {
-			console.log('changeOneUnmatchedCard: Selection failed, skipping swap');
-			return;
-		}
-		
-		const [card1, card2] = selected;
-		if (!card1 || !card2) {
-			console.log('changeOneUnmatchedCard: Invalid cards selected, skipping swap');
-			return;
-		}
-		
-		// Add visual feedback
-		addVisualFeedback(card1, card2);
-		
-		// Wait for preview, then swap
-		setTimeout(() => {
-			swapCardPositions(card1, card2);
-			console.log('=== changeOneUnmatchedCard: Swap Process Complete ===');
-		}, PREVIEW_DURATION);
-	}
+  // Core Functions - changeOneUnmatchedCard() (Main Function)
+  // Purpose: Orchestrate the swap process
+  function changeOneUnmatchedCard() {
+    console.log("=== changeOneUnmatchedCard: Starting Swap Process ===");
+
+    // Check if game is locked (user interacting)
+    if (lockBoard) {
+      console.log("changeOneUnmatchedCard: Board is locked, skipping swap");
+      return;
+    }
+
+    // Get eligible cards
+    const eligible = getUnmatchedFaceDownCards();
+    if (eligible.length < 2) {
+      console.log(
+        "changeOneUnmatchedCard: Not enough eligible cards (< 2), skipping swap"
+      );
+      return;
+    }
+
+    // Select cards to swap
+    const selected = selectCardsToSwap(eligible);
+    if (!selected) {
+      console.log("changeOneUnmatchedCard: Selection failed, skipping swap");
+      return;
+    }
+
+    const [card1, card2] = selected;
+    if (!card1 || !card2) {
+      console.log(
+        "changeOneUnmatchedCard: Invalid cards selected, skipping swap"
+      );
+      return;
+    }
+
+    // Add visual feedback
+    addVisualFeedback(card1, card2);
+
+    // Wait for preview, then swap
+    setTimeout(() => {
+      swapCardPositions(card1, card2);
+      console.log("=== changeOneUnmatchedCard: Swap Process Complete ===");
+    }, PREVIEW_DURATION);
+  }
 
   // Testing: Helper function to check eligible cards anytime
 	// Call this from the browser console: testEligibleCards()
@@ -670,6 +683,7 @@
 
   // ------------ END of main part of the Swap & move unMatched Cards feature section ------------
 
+  // ------------ END of main part of the Swap & move unMatched Cards feature section ------------
 
   // ------------ START of game modals section ------------
 
@@ -721,6 +735,7 @@
     restartBtn.addEventListener("click", () => {
       buildBoard(8);
       resetTimer(); // reset to 01:00, do NOT auto-start — start on first flip
+      lockBoard = false;
     });
   }
 
