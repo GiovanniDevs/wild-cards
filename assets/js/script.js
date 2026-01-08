@@ -690,14 +690,29 @@
   // Shows winning modal
   function showWinModal() {
     const modal = document.getElementById("win-modal");
-    modal.style.display = "flex";
+    if (modal) modal.style.display = "flex";
 
     const score = calcScore();
+    const statsEl = document.getElementById("win-final-stats");
+    if (statsEl) statsEl.textContent = `Final score: ${score}`;
 
-    //Add game stats
-    document.getElementById(
-      "win-final-stats"
-    ).textContent = `Final score: ${score}`;
+    const playerName = localStorage.getItem('playerName') || 'Player';
+    const entry = {
+      name: playerName,
+      score: score,
+      timeLeft: timeLeft,
+      difficulty: currentDifficulty,
+      tstamp: Date.now()
+    };
+    addLeaderboardEntry(entry);
+    renderLeaderboard();
+
+    // show Bootstrap leaderboard modal if present
+    const lbEl = document.getElementById('leaderboardModal');
+    if (lbEl && window.bootstrap) {
+      const lbModal = new window.bootstrap.Modal(lbEl);
+      lbModal.show();
+    }
   }
 
   function calcScore() {
@@ -823,3 +838,58 @@
     }
   });
 })();
+
+// Leaderboard (localStorage, DOM-based)
+const LEADERBOARD_KEY = 'wildcards_leaderboard';
+const LEADERBOARD_MAX = 10;
+
+function getLeaderboard() {
+  try {
+    return JSON.parse(localStorage.getItem(LEADERBOARD_KEY)) || [];
+  } catch (e) {
+    console.warn('Leaderboard read error', e);
+    return [];
+  }
+}
+
+function saveLeaderboard(list) {
+  localStorage.setItem(LEADERBOARD_KEY, JSON.stringify(list.slice(0, LEADERBOARD_MAX)));
+}
+
+function addLeaderboardEntry(entry) {
+  const list = getLeaderboard();
+  list.push(entry);
+  // sort: higher score first, tie-break by earlier timestamp
+  list.sort((a, b) => b.score - a.score || a.tstamp - b.tstamp);
+  saveLeaderboard(list);
+  return list;
+}
+
+function renderLeaderboard() {
+  const container = document.getElementById('leaderboard-list');
+  if (!container) return;
+  // clear existing
+  container.textContent = '';
+  const list = getLeaderboard();
+  if (list.length === 0) {
+    const p = document.createElement('p');
+    p.className = 'mb-0';
+    p.textContent = 'No scores yet.';
+    container.appendChild(p);
+    return;
+  }
+
+  list.forEach((r, i) => {
+    const row = document.createElement('div');
+    row.className = 'd-flex justify-content-between align-items-center py-1';
+    const left = document.createElement('div');
+    left.textContent = `#${i + 1} ${r.name}`;
+    const right = document.createElement('div');
+      const meta = `${r.score} pts${r.difficulty ? ' • ' + r.difficulty : ''}`;
+      // Display only score and difficulty (omit time taken and date)
+      right.textContent = meta;
+    row.appendChild(left);
+    row.appendChild(right);
+    container.appendChild(row);
+  });
+}

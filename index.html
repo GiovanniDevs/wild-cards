@@ -103,6 +103,8 @@
         </div>
     </header>
 
+      <main>
+
     <!-- Rules Modal -->
     <div id="rules-modal" class="modal-overlay">
       <div class="modal-content">
@@ -166,8 +168,10 @@
       </div>
     </div>
 
+    </main>
+
     <!-- Footer -->
-    <Footer class="mt-5 p-2">
+    <footer class="mt-5 p-2">
       <div class="container">
         <p class="pt-3 text-center">
           &copy; 2026 Memory Match Mania. All rights reserved. <br> Developed by
@@ -178,7 +182,7 @@
           <a id="Valentino" href="https://github.com/ValentinoFarias" target="_blank" rel="noopener noreferrer">Valentino Farias</a>
         </p>
       </div>
-    </Footer>
+    </footer>
 
     <!-- username modal (Bootstrap) -->
     <div
@@ -219,6 +223,23 @@
             >
               Save name
             </button>
+          </div>
+        </div>
+      </div>
+    </div>
+
+    <!-- Leaderboard modal -->
+    <div class="modal fade" id="leaderboardModal" tabindex="-1" aria-hidden="true">
+      <div class="modal-dialog modal-sm modal-dialog-centered">
+        <div class="modal-content">
+          <div class="modal-header">
+            <h5 class="modal-title">Leaderboard</h5>
+            <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
+          </div>
+          <div class="modal-body" id="leaderboard-list"></div>
+          <div class="modal-footer">
+            <button type="button" id="clear-leaderboard" class="btn btn-sm btn-danger">Clear</button>
+            <button type="button" class="btn btn-sm btn-secondary" data-bs-dismiss="modal">Close</button>
           </div>
         </div>
       </div>
