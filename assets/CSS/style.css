@@ -15,9 +15,6 @@
   --primary-color: rgb(24, 24, 24);
   --secondary-color: rgb(119, 119, 119);
 
-  /* Backwards-compatible color aliases used in the stylesheet */
-  --color-01: #5f4534;
-  --color-02: #f0dfc1;
   --color-RGB-01: #ee3636;
   --color-RGB-02: #fced21;
   --color-RGB-03: #4ef02a;
@@ -64,7 +61,7 @@ body {
   display: flex;
   flex-direction: column;
   height: 100%;
-} 
+}
 
 main {
   flex: 1;
