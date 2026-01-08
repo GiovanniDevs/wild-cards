@@ -536,20 +536,26 @@
     modal.style.display = "flex";
   }
 
-  // Hide the modal and restart
+  // Hide the modal and restart (guarded in case elements are absent)
   const winButton = document.getElementById("win-play-again-button");
-  winButton.addEventListener("click", function () {
-    document.getElementById("win-modal").style.display = "none";
-    // restart the board
-    buildBoard(8);
-  });
+  if (winButton) {
+    winButton.addEventListener("click", function () {
+      const winModal = document.getElementById("win-modal");
+      if (winModal) winModal.style.display = "none";
+      // restart the board
+      buildBoard(8);
+    });
+  }
 
   const loseButton = document.getElementById("lose-play-again-button");
-  loseButton.addEventListener("click", function () {
-    document.getElementById("lose-modal").style.display = "none";
-    // restart the board
-    buildBoard(8);
-  });
+  if (loseButton) {
+    loseButton.addEventListener("click", function () {
+      const loseModal = document.getElementById("lose-modal");
+      if (loseModal) loseModal.style.display = "none";
+      // restart the board
+      buildBoard(8);
+    });
+  }
 
   // ------------ END of modals section --------------
 
@@ -565,14 +571,20 @@
   // Rules buttons modal
 
   const openButton = document.getElementById("open-rules");
-  openButton.addEventListener("click", function () {
-    document.getElementById("rules-modal").style.display = "flex";
-  });
+  if (openButton) {
+    openButton.addEventListener("click", function () {
+      const rm = document.getElementById("rules-modal");
+      if (rm) rm.style.display = "flex";
+    });
+  }
 
   const closeButton = document.getElementById("close-rules");
-  closeButton.addEventListener("click", function () {
-    document.getElementById("rules-modal").style.display = "none";
-  });
+  if (closeButton) {
+    closeButton.addEventListener("click", function () {
+      const rm = document.getElementById("rules-modal");
+      if (rm) rm.style.display = "none";
+    });
+  }
 
   // build initial board on load and reset timer
   document.addEventListener("DOMContentLoaded", () => {
