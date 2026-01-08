@@ -225,6 +225,7 @@
   function onTimeUp() {
     if (timerEl) timerEl.classList.add("timer-expired");
     lockBoard = true; // block clicks when time is up
+    stopSwapInterval(); // Stop card swapping when time is up
     showLoseModal();
   }
 
