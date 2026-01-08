@@ -25,9 +25,22 @@ Players enjoy a fresh take on the classic memory game with entertaining themes a
 
 ## Enhanced Features
 
-- **Difficulty Levels** - Choose between Easy, Medium, and Hard
-- **Personalized Name** - Enter your name for a customized experience
-- **Score Calculation** - Performance-based scoring system tracking time
+- **Difficulty Levels** - Choose between Easy (1:30), Medium (1:00), and Hard (00:30)
+  
+![Difficulty Levels](assets/images/For%20README/difficulty.png)
+
+- **Personalised Name** - Enter your name for a customized experience using LocalStorage
+
+![Personalised Name](assets/images/For%20README/changename.png)
+
+- **Score Calculation** - Performance-based scoring system tracking times
+
+![Score Calculation](assets/images/For%20README/score.png)
+
+- **Leaderboard** - Top 10 players have their name saved in a local hiscore table
+
+![Leaderboard](assets/images/For%20README/leaderboard.png)
+
 - **Smooth Animations** - Card flip animations and transitions
 
 ## Technologies Used
@@ -89,17 +102,17 @@ The site updates automatically whenever changes are pushed to the selected branc
 - Cards should stack in a cleaner way when on small screen devices.
 - On Firefox swap animation doen't work properly.
 
-## Ai use
+## AI use
 
 **Code Generation**
 
 AI was used to explore various game features and help understand the logic behind complex mechanics like dynamic card swapping and match detection. By working through implementation approaches with AI, the team gained deeper insight into DOM manipulation techniques and event handling strategies that shaped the final code.
 
-**Ai debugging**
+**AI debugging**
 
 AI debugging helped resolve both simple and complex issues throughout development, from identifying duplicated IDs and CSS styling conflicts to fixing the logic of more advanced features. This support streamlined the troubleshooting process, allowing the team to quickly diagnose problems and implement effective solutions across all aspects of the game.
 
-**Ai for better UX**
+**AI for better UX**
 
 AI was used to suggest accessibility improvements such as ARIA labels and enhanced visual feedback for interactive elements.
 
