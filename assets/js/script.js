@@ -593,7 +593,7 @@
   }
 
   // Swap & move unMatched Cards feature
-  // Purpose: Start the Automatic cardswapping of 2 random unmatched cards evrery 12 seconds
+  // Purpose: Start the Automatic cardswapping of 2 random unmatched cards every 12 seconds
   // Interval Management - startSwapInterval()
   function startSwapInterval() {
     // Clear any existing interval
