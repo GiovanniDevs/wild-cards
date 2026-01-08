@@ -1,3 +1,13 @@
+/* Google font  */
+@import url("https://fonts.googleapis.com/css2?family=Lato:ital,wght@0,100;0,300;0,400;0,700;0,900;1,100;1,300;1,400;1,700;1,900&family=Merriweather:ital,opsz,wght@0,18..144,300..900;1,18..144,300..900&family=Rubik+Bubbles&display=swap");
+
+.rubik-bubbles-regular {
+  font-family: "Rubik Bubbles", system-ui;
+  font-weight: 400;
+  font-style: normal;
+  text-transform: uppercase;
+}
+
 :root {
   --color-01: #5f4534;
   --color-02: #f0dfc1;
@@ -11,15 +21,32 @@
 }
 
 @keyframes colorChange {
-  0% {color: var(--color-RGB-01);}
-  15% {color: var(--color-RGB-02);}
-  30% {color: var(--color-RGB-03);}
-  45% {color: var(--color-RGB-04);}
-  60% {color: var(--color-RGB-05);}
-  75% {color: var(--color-RGB-06);}
-  100% {color: var(--color-RGB-01);}
+  0% {
+    color: var(--color-RGB-01);
+  }
+  15% {
+    color: var(--color-RGB-02);
+  }
+  30% {
+    color: var(--color-RGB-03);
+  }
+  45% {
+    color: var(--color-RGB-04);
+  }
+  60% {
+    color: var(--color-RGB-05);
+  }
+  75% {
+    color: var(--color-RGB-06);
+  }
+  100% {
+    color: var(--color-RGB-01);
+  }
 }
 
+html {
+  height: 100%;
+}
 /* body styling */
 body {
   color: var(--color-01);
@@ -29,7 +56,11 @@ body {
   background-color: #f0dfc1;
   display: flex;
   flex-direction: column;
-  min-height: 100vh;
+  height: 100%;
+} 
+
+main {
+  flex: 1;
 }
 
 header {
@@ -81,10 +112,15 @@ footer a {
 /* Memory game grid and card styles */
 .game-container {
   margin-top: 18px;
+  position: relative;
+  overflow: hidden;
 }
 .grid {
   max-width: 380px;
   margin: 0 auto;
+  overflow: hidden;
+  position: relative;
+  contain: layout style paint;
 }
 .card {
   width: 70px;
@@ -132,13 +168,14 @@ footer a {
 /* Card swap preview animation */
 /* test */
 @keyframes swapPreview {
-  10%, 90% { 
+  10%,
+  90% {
     transform: scale(1);
   }
-  25% { 
+  25% {
     transform: scale(1.1) rotate(-1.5deg);
   }
-  75% { 
+  75% {
     transform: scale(1.1) rotate(1.5deg);
   }
 }
@@ -150,15 +187,16 @@ footer a {
 }
 
 /* Card swap position animation */
-.col-4 {
+.col-3 {
   transition: transform 0.6s cubic-bezier(0.4, 0, 0.2, 1);
   transform-origin: center center;
+  position: relative;
 }
 
-.col-4.swapping {
+.col-3.swapping {
   z-index: 5;
   position: relative;
-  will-change: transform; /* Optimize for animation */
+  will-change: transform;
   transition: transform 0.6s cubic-bezier(0.4, 0, 0.2, 1) !important;
 }
 /* End of Auto card swap and move feature styling -------------------*/
@@ -174,8 +212,8 @@ footer a {
     height: 85px;
   }
   header h1 {
-  font-size: 2rem;
-  }  
+    font-size: 2rem;
+  }
 }
 
 @media (max-width: 420px) {
@@ -189,8 +227,8 @@ footer a {
     height: 80px;
   }
   header h1 {
-  font-size: 1.5em;
-}
+    font-size: 1.5em;
+  }
 }
 
 /* Timer display */
