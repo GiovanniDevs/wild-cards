@@ -78,10 +78,15 @@ footer a {
 /* Memory game grid and card styles */
 .game-container {
   margin-top: 18px;
+  position: relative;
+  overflow: hidden;
 }
 .grid {
   max-width: 380px;
   margin: 0 auto;
+  overflow: hidden;
+  position: relative;
+  contain: layout style paint;
 }
 .card {
   width: 70px;
@@ -156,13 +161,13 @@ footer a {
 .col-3 {
   transition: transform 0.6s cubic-bezier(0.4, 0, 0.2, 1);
   transform-origin: center center;
-  overflow: visible;
+  position: relative;
 }
 
 .col-3.swapping {
   z-index: 5;
   position: relative;
-  will-change: transform; /* Optimize for animation */
+  will-change: transform;
   transition: transform 0.6s cubic-bezier(0.4, 0, 0.2, 1) !important;
 }
 /* End of Auto card swap and move feature styling -------------------*/

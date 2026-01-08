@@ -462,47 +462,40 @@
 		console.log('Card 1:', card1.dataset.face, '- Container index:', index1);
 		console.log('Card 2:', card2.dataset.face, '- Container index:', index2);
 		
-		// Get grid position for reference frame
-		const gridRect = parent.getBoundingClientRect();
-		
-		// Get positions relative to the grid container (not viewport)
+		// Get VIEWPORT positions (not grid-relative) for animation
 		const rect1 = container1.getBoundingClientRect();
 		const rect2 = container2.getBoundingClientRect();
 		
-		// Calculate positions relative to grid container
-		const pos1X = rect1.left - gridRect.left;
-		const pos1Y = rect1.top - gridRect.top;
-		const pos2X = rect2.left - gridRect.left;
-		const pos2Y = rect2.top - gridRect.top;
+		// Store original positions in viewport coordinates
+		const pos1 = { x: rect1.left, y: rect1.top };
+		const pos2 = { x: rect2.left, y: rect2.top };
 		
 		console.log('=== Starting Visual Swap ===');
-		console.log('Card 1 position (relative to grid) - X:', pos1X.toFixed(2), 'Y:', pos1Y.toFixed(2));
-		console.log('Card 2 position (relative to grid) - X:', pos2X.toFixed(2), 'Y:', pos2Y.toFixed(2));
+		console.log('Card 1 viewport position - X:', pos1.x.toFixed(2), 'Y:', pos1.y.toFixed(2));
+		console.log('Card 2 viewport position - X:', pos2.x.toFixed(2), 'Y:', pos2.y.toFixed(2));
 		
-		// Calculate the distance each card needs to travel (grid-relative)
-		const deltaX1 = pos2X - pos1X;
-		const deltaY1 = pos2Y - pos1Y;
-		const deltaX2 = pos1X - pos2X;
-		const deltaY2 = pos1Y - pos2Y;
+		// Calculate distance to move
+		const deltaX1 = pos2.x - pos1.x;
+		const deltaY1 = pos2.y - pos1.y;
+		const deltaX2 = pos1.x - pos2.x;
+		const deltaY2 = pos1.y - pos2.y;
 		
 		console.log('Card 1 will move:', deltaX1.toFixed(2), 'px X,', deltaY1.toFixed(2), 'px Y');
 		console.log('Card 2 will move:', deltaX2.toFixed(2), 'px X,', deltaY2.toFixed(2), 'px Y');
 		
-		// Add transition class and prepare for animation
+		// Set up for animation with absolute positioning
 		container1.classList.add('swapping');
 		container2.classList.add('swapping');
-		container1.style.transformOrigin = 'center center';
-		container2.style.transformOrigin = 'center center';
 		
-		// Start from current position (0, 0)
+		// Start animation from current position
 		container1.style.transform = `translate(0, 0)`;
 		container2.style.transform = `translate(0, 0)`;
 		
-		// Force reflow to ensure the initial state is rendered
+		// Force reflow
 		void container1.offsetHeight;
 		void container2.offsetHeight;
 		
-		// Animate to target positions using requestAnimationFrame
+		// Animate to target positions
 		requestAnimationFrame(() => {
 			requestAnimationFrame(() => {
 				console.log('Animating cards to new positions...');
@@ -511,25 +504,24 @@
 			});
 		});
 		
-		// After animation completes, swap in DOM and reset transforms
+		// After animation, swap in DOM
 		setTimeout(() => {
 			console.log('Animation complete, swapping in DOM...');
 			
-			// Swap in DOM
-			const placeholder = document.createTextNode('');
-			const nextSibling1 = container1.nextSibling;
+			// Swap the containers in the DOM
+			const tempNode = document.createTextNode('');
+			parent.insertBefore(tempNode, container1);
 			
-			parent.insertBefore(placeholder, container1);
-			const nextSibling2 = container2.nextSibling;
-			if (nextSibling2) {
-				parent.insertBefore(container1, nextSibling2);
+			if (container2.nextSibling) {
+				parent.insertBefore(container1, container2.nextSibling);
 			} else {
 				parent.appendChild(container1);
 			}
-			parent.insertBefore(container2, placeholder);
-			parent.removeChild(placeholder);
 			
-			// Reset transforms
+			parent.insertBefore(container2, tempNode);
+			parent.removeChild(tempNode);
+			
+			// Remove animation styling
 			container1.style.transform = '';
 			container2.style.transform = '';
 			container1.classList.remove('swapping');
@@ -537,14 +529,6 @@
 			
 			console.log('=== Swap Complete ===');
 		}, SWAP_DURATION);
-		
-		// Verify swap
-		const newChildren = Array.from(parent.children);
-		const newIndex1 = newChildren.indexOf(container1);
-		const newIndex2 = newChildren.indexOf(container2);
-		console.log('After swap - Container 1 new index:', newIndex1);
-		console.log('After swap - Container 2 new index:', newIndex2);
-		console.log('=== Swap Complete ===');
 	}
 
 
