@@ -505,8 +505,17 @@
 			});
 		});
 		
-		// After animation, swap in DOM
-		setTimeout(() => {
+		// After animation, swap in DOM using RAF to respect tab visibility
+		let frameCount = 0;
+		const targetFrames = Math.ceil(SWAP_DURATION / 16.67); // ~60fps = 16.67ms per frame
+		
+		const completeSwap = () => {
+			frameCount++;
+			if (frameCount < targetFrames) {
+				requestAnimationFrame(completeSwap);
+				return;
+			}
+			
 			console.log('Animation complete, swapping in DOM...');
 			
 			// Swap the containers in the DOM
@@ -529,7 +538,9 @@
 			container2.classList.remove('swapping');
 			
 			console.log('=== Swap Complete ===');
-		}, SWAP_DURATION);
+		};
+		
+		requestAnimationFrame(completeSwap);
 	}
 
 
